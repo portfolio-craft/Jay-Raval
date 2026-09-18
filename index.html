@@ -4,11 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jay Raval</title>
-<meta name="description" content="Jay Raval — Transformation Analyst and Industrial Engineer in Halifax, NS. Lean Six Sigma Green Belt building automation platforms on Power Apps, Power BI and SharePoint.">
+<meta name="description" content="Jay Raval: Transformation Analyst and Industrial Engineer in Halifax, NS. Lean Six Sigma Green Belt building automation platforms on Power Apps, Power BI and SharePoint.">
 <link rel="icon" href="data:,">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,440;0,9..144,560;0,9..144,650;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F6F3EA; --paper-2:#EFEADC; --ink:#1D1A15; --ink-soft:#57524A; --faint:#938C7E;
@@ -20,14 +17,14 @@
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{margin:0;background:var(--paper);color:var(--ink);
-    font-family:"Inter",system-ui,sans-serif;font-size:17px;line-height:1.6;
+    font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-size:17px;line-height:1.6;
     -webkit-font-smoothing:antialiased;}
   a{color:inherit;}
-  h1,h2,h3{font-family:"Fraunces",serif;font-weight:560;line-height:1.05;margin:0;}
-  em{font-style:italic;font-family:"Fraunces",serif;}
+  h1,h2,h3{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;line-height:1.05;margin:0;}
+  em{font-style:italic;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;}
   ::selection{background:var(--rust);color:var(--paper);}
   img,svg{display:block;max-width:100%;}
-  .num{font-family:"JetBrains Mono",monospace;}
+  .num{font-family:Consolas,"Courier New",monospace;}
 
   /* ---------- SKIP LINK ---------- */
   .skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:200;}
@@ -39,19 +36,19 @@
   /* ---------- RAIL ---------- */
   .rail{position:sticky;top:0;height:100vh;padding:clamp(28px,4vw,52px) clamp(24px,3vw,40px);
     display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);}
-  .mark{font-family:"Fraunces",serif;font-weight:650;font-size:1.5rem;letter-spacing:-.01em;text-decoration:none;display:block;}
-  .mark small{display:block;font-family:"JetBrains Mono",monospace;font-weight:400;font-size:11.5px;
+  .mark{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-.01em;text-decoration:none;display:block;}
+  .mark small{display:block;font-family:Consolas,"Courier New",monospace;font-weight:400;font-size:11.5px;
     letter-spacing:.06em;color:var(--faint);margin-top:8px;text-transform:none;}
   .rail-nav{margin-top:44px;}
   .rail-nav ol{list-style:none;margin:0;padding:0;counter-reset:sec;}
   .rail-nav li{counter-increment:sec;margin-bottom:3px;}
   .rail-nav a{display:flex;gap:12px;align-items:baseline;padding:7px 2px;font-size:14.5px;color:var(--ink-soft);
     text-decoration:none;border-radius:2px;transition:color .15s;}
-  .rail-nav a::before{content:counter(sec,decimal-leading-zero);font-family:"JetBrains Mono",monospace;
+  .rail-nav a::before{content:counter(sec,decimal-leading-zero);font-family:Consolas,"Courier New",monospace;
     font-size:11.5px;color:var(--faint);}
   .rail-nav a:hover,.rail-nav a.on{color:var(--rust);}
   .rail-nav a.on::before{color:var(--rust);}
-  .rail-foot{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--faint);}
+  .rail-foot{font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);}
   .rail-foot .clock{color:var(--ink-soft);margin-bottom:14px;}
   .rail-foot .clock b{color:var(--ink);font-weight:500;}
   .rail-socials{display:flex;flex-direction:column;gap:6px;margin-top:14px;}
@@ -66,8 +63,8 @@
   .block + .block{border-top:1px solid var(--line);}
   .measure{max-width:var(--content-max);}
   .kicker{display:flex;align-items:baseline;gap:14px;margin-bottom:28px;}
-  .kicker .n{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--rust);}
-  .kicker .t{font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .kicker .n{font-family:Consolas,"Courier New",monospace;font-size:13px;color:var(--rust);}
+  .kicker .t{font-family:Consolas,"Courier New",monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
   .kicker::after{content:"";flex:1;height:1px;background:var(--rule);}
 
   /* ---------- HERO ---------- */
@@ -76,7 +73,7 @@
   .hero h1{font-size:clamp(2.1rem,4.6vw,3.35rem);letter-spacing:-.015em;max-width:15ch;}
   .hero h1 em{color:var(--rust);}
   .hero .lede{margin-top:26px;max-width:56ch;font-size:1.12rem;color:var(--ink-soft);}
-  .hero .now{margin-top:34px;font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--faint);
+  .hero .now{margin-top:34px;font-family:Consolas,"Courier New",monospace;font-size:13px;color:var(--faint);
     display:flex;flex-wrap:wrap;gap:6px 10px;}
   .hero .now b{color:var(--ink);font-weight:500;}
   .hero-links{display:flex;flex-wrap:wrap;gap:22px 30px;margin-top:38px;}
@@ -90,8 +87,7 @@
   .impact-row{display:flex;flex-wrap:wrap;gap:0;margin-top:6px;}
   .impact-item{flex:1 1 150px;padding:22px 26px 22px 0;border-right:1px solid var(--line);}
   .impact-item:last-child{border-right:none;}
-  .impact-item .v{font-family:"Fraunces",serif;font-weight:560;font-size:clamp(2.1rem,4vw,2.7rem);color:var(--ink);
-    font-variant-numeric:oldstyle-nums;}
+  .impact-item .v{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:clamp(2.1rem,4vw,2.7rem);color:var(--ink);}
   .impact-item .l{margin-top:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.45;max-width:20ch;}
   .impact-note{margin-top:30px;font-size:14.5px;color:var(--faint);max-width:60ch;}
 
@@ -100,20 +96,20 @@
   .step{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);}
   .step:first-child{padding-top:0;}
   .step:last-child{border-bottom:none;}
-  .step .sn{font-family:"Fraunces",serif;font-style:italic;font-weight:500;font-size:1.5rem;color:var(--rust);}
-  .step h3{font-size:1.08rem;font-weight:600;font-family:"Inter";}
+  .step .sn{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-style:italic;font-weight:500;font-size:1.5rem;color:var(--rust);}
+  .step h3{font-size:1.08rem;font-weight:600;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;}
   .step p{margin:6px 0 0;color:var(--ink-soft);font-size:15px;max-width:56ch;}
 
   /* ---------- EXPERIENCE ---------- */
   .xp{display:grid;grid-template-columns:200px 1fr;gap:8px 32px;padding:30px 0;border-bottom:1px solid var(--line);}
   .xp:first-of-type{padding-top:0;}
   .xp:last-child{border-bottom:none;}
-  .xp .when{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--faint);letter-spacing:.03em;padding-top:4px;}
-  .xp .role{font-family:"Fraunces",serif;font-weight:560;font-size:1.28rem;}
+  .xp .when{font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);letter-spacing:.03em;padding-top:4px;}
+  .xp .role{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:1.28rem;}
   .xp .org{margin-top:4px;font-size:14.5px;color:var(--rust);font-weight:500;}
   .xp ul{margin:16px 0 0;padding:0;list-style:none;}
   .xp li{position:relative;padding-left:20px;margin-bottom:10px;color:var(--ink-soft);font-size:15.5px;}
-  .xp li::before{content:"—";position:absolute;left:0;color:var(--faint);}
+  .xp li::before{content:"•";position:absolute;left:0;color:var(--faint);}
   .xp li b{color:var(--ink);font-weight:600;}
 
   /* ---------- WORK ---------- */
@@ -121,19 +117,19 @@
   .work-item:first-of-type{padding-top:0;}
   .work-item:last-child{border-bottom:none;}
   .work-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;}
-  .work-head h3{font-size:1.32rem;font-weight:560;}
-  .work-status{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  .work-head h3{font-size:1.32rem;font-weight:700;}
+  .work-status{font-family:Consolas,"Courier New",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
     color:var(--faint);white-space:nowrap;}
   .work-status.live{color:var(--rust);}
   .work-item p{margin:14px 0 0;color:var(--ink-soft);font-size:15.5px;max-width:62ch;}
-  .work-tags{margin-top:16px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--faint);}
+  .work-tags{margin-top:16px;font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);}
   .work-tags span:not(:last-child)::after{content:" / ";color:var(--rule);}
   .work-metric{margin-top:14px;font-size:14.5px;color:var(--ink);}
   .work-metric b{color:var(--rust);font-weight:600;}
 
   /* ---------- SKILLS ---------- */
   .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
-  .skill-col h3{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:500;letter-spacing:.1em;
+  .skill-col h3{font-family:Consolas,"Courier New",monospace;font-size:12px;font-weight:500;letter-spacing:.1em;
     text-transform:uppercase;color:var(--rust);margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line);}
   .skill-col ul{list-style:none;margin:0;padding:0;}
   .skill-col li{padding:5px 0;font-size:15px;color:var(--ink-soft);}
@@ -144,24 +140,24 @@
     font-size:15px;}
   .cred:last-child{border-bottom:none;}
   .cred .name{color:var(--ink);}
-  .cred .issuer{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--faint);white-space:nowrap;padding-top:2px;}
+  .cred .issuer{font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);white-space:nowrap;padding-top:2px;}
   .cred.pending .name{color:var(--ink-soft);font-style:italic;}
 
   /* ---------- BACKGROUND (edu + vol) ---------- */
   .bg-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;}
-  .bg-col h3{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:500;letter-spacing:.1em;
+  .bg-col h3{font-family:Consolas,"Courier New",monospace;font-size:12px;font-weight:500;letter-spacing:.1em;
     text-transform:uppercase;color:var(--faint);margin:0 0 20px;}
   .bg-row{padding:18px 0;border-bottom:1px solid var(--line);}
   .bg-row:first-of-type{padding-top:0;}
   .bg-col:last-child .bg-row:last-child{border-bottom:none;}
-  .bg-row .when{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--rust);}
-  .bg-row h4{font-family:"Fraunces",serif;font-weight:560;font-size:1.02rem;margin-top:6px;}
+  .bg-row .when{font-family:Consolas,"Courier New",monospace;font-size:11.5px;color:var(--rust);}
+  .bg-row h4{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:1.02rem;margin-top:6px;}
   .bg-row p{margin:4px 0 0;font-size:14px;color:var(--ink-soft);}
   @media (max-width:720px){.bg-grid{grid-template-columns:1fr;gap:0;} .bg-col+.bg-col{margin-top:40px;}}
 
   .beyond{margin-top:44px;padding-top:32px;border-top:1px solid var(--line);
     display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;}
-  .beyond .l{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .beyond .l{font-family:Consolas,"Courier New",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
   .beyond span.i{font-size:15px;color:var(--ink-soft);}
   .beyond span.i:not(:last-child)::after{content:"·";margin-left:16px;color:var(--rule);}
 
@@ -176,12 +172,12 @@
   .c-row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:20px 0;
     border-bottom:1px solid #35322A;flex-wrap:wrap;}
   .c-row:last-child{border-bottom:none;}
-  .c-row .k{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#8A8478;}
-  .c-row a{font-family:"Fraunces",serif;font-size:1.3rem;font-weight:560;color:var(--ink-invert);text-decoration:none;
+  .c-row .k{font-family:Consolas,"Courier New",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#8A8478;}
+  .c-row a{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-size:1.3rem;font-weight:700;color:var(--ink-invert);text-decoration:none;
     border-bottom:1.5px solid transparent;transition:color .18s,border-color .18s;}
   .c-row a:hover{color:#E0A481;border-color:#E0A481;}
 
-  footer{padding:26px clamp(24px,6vw,88px);font-family:"JetBrains Mono",monospace;font-size:12px;color:#8A8478;
+  footer{padding:26px clamp(24px,6vw,88px);font-family:Consolas,"Courier New",monospace;font-size:12px;color:#8A8478;
     background:var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 
   [data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1);}
@@ -206,7 +202,7 @@
     .rail.open .rail-foot{margin-top:36px;}
     .rail-top{display:flex;align-items:center;justify-content:space-between;width:100%;}
     .rail-toggle{display:block;background:none;border:1px solid var(--line);border-radius:3px;
-      font-family:"JetBrains Mono",monospace;font-size:12px;padding:8px 12px;color:var(--ink);cursor:pointer;}
+      font-family:Consolas,"Courier New",monospace;font-size:12px;padding:8px 12px;color:var(--ink);cursor:pointer;}
     .impact-row{flex-wrap:wrap;}
     .impact-item{flex:1 1 44%;border-bottom:1px solid var(--line);}
   }
@@ -242,7 +238,7 @@
       </nav>
     </div>
     <div class="rail-foot">
-      <div class="clock" id="clock">— · Halifax, NS</div>
+      <div class="clock" id="clock">Halifax, NS</div>
       <div class="rail-socials">
         <a href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF) ↗</a>
         <a href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -259,7 +255,7 @@
       <div class="measure">
         <div class="kicker"><span class="n">00</span><span class="t">Halifax, Nova Scotia</span></div>
         <h1>I make the way work <em>actually happens</em> match the way it should.</h1>
-        <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who spends most days inside operations that are held together by spreadsheets and habit — then rebuilds them as systems that run without someone remembering to update them.</p>
+        <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who spends most days inside operations that are held together by spreadsheets and habit. I rebuild them as systems that run without someone remembering to update them.</p>
         <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, owning the platform across three Atlantic Canada branches.</p>
         <div class="hero-links">
           <a class="tlink" href="#contact">Get in touch</a>
@@ -272,10 +268,10 @@
     <section class="block" id="impact">
       <div class="kicker"><span class="n">01</span><span class="t">A year of delivery</span></div>
       <div class="measure">
-        <h2 style="font-size:1.5rem;font-weight:560;">What one analyst shipped, solo, in fourteen months</h2>
+        <h2 style="font-size:1.5rem;font-weight:700;">What one analyst shipped, solo, in fourteen months</h2>
       </div>
       <div class="impact-row" data-reveal>
-        <div class="impact-item"><div class="v num">7</div><div class="l">Power Apps designed and built for shop-floor use</div></div>
+        <div class="impact-item"><div class="v num">7</div><div class="l">Power Apps designed and built for shop floor use</div></div>
         <div class="impact-item"><div class="v num">18</div><div class="l">Power Automate flows running in production</div></div>
         <div class="impact-item"><div class="v num">6</div><div class="l">Power BI dashboards leadership checks daily</div></div>
         <div class="impact-item"><div class="v num">3</div><div class="l">Branches on one shared operations platform</div></div>
@@ -288,9 +284,9 @@
     <section class="block" id="approach">
       <div class="kicker"><span class="n">02</span><span class="t">How I work</span></div>
       <div class="measure steps">
-        <div class="step" data-reveal><span class="sn">a</span><div><h3>Map it as it is</h3><p>Walk the floor, watch the workaround, draw the current-state process before touching a single tool.</p></div></div>
+        <div class="step" data-reveal><span class="sn">a</span><div><h3>Map it as it is</h3><p>Walk the floor, watch the workaround, draw the current state process before touching a single tool.</p></div></div>
         <div class="step" data-reveal><span class="sn">b</span><div><h3>Design the future state</h3><p>Sketch what the process should look like once the manual steps are gone, and check it against how people actually work.</p></div></div>
-        <div class="step" data-reveal><span class="sn">c</span><div><h3>Build it in the Microsoft stack</h3><p>Power Apps for the interface, Power Automate underneath, SharePoint as the backbone — nothing exotic, everything supportable.</p></div></div>
+        <div class="step" data-reveal><span class="sn">c</span><div><h3>Build it in the Microsoft stack</h3><p>Power Apps for the interface, Power Automate underneath, SharePoint as the backbone. Nothing exotic, everything supportable.</p></div></div>
         <div class="step" data-reveal><span class="sn">d</span><div><h3>Make adoption someone's job, not luck</h3><p>SOPs, training, and staying the first responder until the new way is just "the way."</p></div></div>
       </div>
     </section>
@@ -300,39 +296,39 @@
       <div class="kicker"><span class="n">03</span><span class="t">Experience</span></div>
 
       <div class="xp" data-reveal>
-        <div class="when">JUN 2025 —<br>PRESENT</div>
+        <div class="when">JUN 2025<br>TO PRESENT</div>
         <div>
           <div class="role">Transformation Analyst</div>
           <div class="org">Prime Material Handling · Halifax, NS</div>
           <ul>
             <li>Own the branch operations platform end to end: <b>7 Power Apps, 18 flows, 6 dashboards</b> on a SharePoint backbone serving 3 branches.</li>
-            <li>Sole developer, admin and first responder — access governance, licensing, and technician onboarding from day one.</li>
+            <li>Sole developer, admin and first responder, covering access governance, licensing, and technician onboarding from day one.</li>
             <li>Drive adoption through SOP packs, Visio process maps and change management across every tool.</li>
           </ul>
         </div>
       </div>
 
       <div class="xp" data-reveal>
-        <div class="when">2022 —<br>2023</div>
+        <div class="when">2022<br>TO 2023</div>
         <div>
           <div class="role">Operations Manager &amp; Client Advisor (S&amp;OP)</div>
           <div class="org">Aangi Advanced Composites · Ahmedabad</div>
           <ul>
-            <li>Built Power BI and Excel KPI tooling that lifted raw-material utilization <b>+18%</b> and automation rate <b>+12%</b>.</li>
-            <li>Ran freight and TCO analysis inside SAP-supported workflows to improve delivery reliability and cut logistics spend.</li>
+            <li>Built Power BI and Excel KPI tooling that lifted raw material utilization <b>+18%</b> and automation rate <b>+12%</b>.</li>
+            <li>Ran freight and TCO analysis inside SAP supported workflows to improve delivery reliability and cut logistics spend.</li>
             <li>Aligned procurement with demand using MRP and replenishment logic, avoiding both stockouts and excess holding.</li>
           </ul>
         </div>
       </div>
 
       <div class="xp" data-reveal>
-        <div class="when">2021 —<br>2022</div>
+        <div class="when">2021<br>TO 2022</div>
         <div>
           <div class="role">Process Improvement Engineer</div>
           <div class="org">Aangi Advanced Composites · Ahmedabad</div>
           <ul>
-            <li>Led root-cause and gap analysis to clear recurring supply-chain bottlenecks.</li>
-            <li>Applied ABC/XYZ classification and lead-time analysis to right-size inventory and safety stock.</li>
+            <li>Led root cause and gap analysis to clear recurring supply chain bottlenecks.</li>
+            <li>Applied ABC/XYZ classification and lead time analysis to right size inventory and safety stock.</li>
           </ul>
         </div>
       </div>
@@ -344,49 +340,49 @@
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Part Request System</h3><span class="work-status live">Live</span></div>
-        <p>Owned the full lifecycle: mapped the current-state process in Visio, designed the future state, built canvas apps backed by 18 automated flows for notifications, timestamps and sync, then rolled it out across branches with shop-floor displays.</p>
+        <p>Owned the full lifecycle: mapped the current state process in Visio, designed the future state, built canvas apps backed by 18 automated flows for notifications, timestamps and sync, then rolled it out across branches with shop floor displays.</p>
         <div class="work-tags"><span>Power Apps</span><span>Power Automate</span><span>Visio</span><span>3 branches</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Dispatch System</h3><span class="work-status">Built</span></div>
-        <p>Mapped, designed and built the field-service dispatch workflow — customer list, machine history and dispatch log — on a modern code-centric stack rather than the low-code toolkit.</p>
+        <p>Mapped, designed and built the field service dispatch workflow, covering customer list, machine history and dispatch log, on a modern code centric stack rather than the low code toolkit.</p>
         <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>GitHub</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>PSSR Sales Pipeline &amp; Dashboard</h3><span class="work-status live">Live</span></div>
         <p>Rebuilt the sales funnel list from the ground up and designed a Power BI dashboard, including Dock &amp; Door, refreshing daily with zero manual updates for live pipeline visibility.</p>
-        <div class="work-tags"><span>Power BI</span><span>Daily auto-refresh</span></div>
+        <div class="work-tags"><span>Power BI</span><span>Daily auto refresh</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>SOP Library &amp; Process Documentation</h3><span class="work-status live">Live</span></div>
-        <p>Authored and maintain the full SOP pack and Visio current/future-state maps — the change-management layer that actually drives adoption of every other tool on this list.</p>
+        <p>Authored and maintain the full SOP pack and Visio current and future state maps, the change management layer that actually drives adoption of every other tool on this list.</p>
         <div class="work-tags"><span>SOPs</span><span>Visio</span><span>Change management</span></div>
       </div>
 
       <div class="work-item" data-reveal>
-        <div class="work-head"><h3>ERP System: AI-Assisted Build</h3><span class="work-status">In progress</span></div>
-        <p>Architecting a custom ERP on Lovable, GitHub and Supabase, pairing AI-assisted development with the existing Microsoft environment as the next generation of the operations platform.</p>
-        <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>AI-assisted dev</span></div>
+        <div class="work-head"><h3>ERP System: AI Assisted Build</h3><span class="work-status">In progress</span></div>
+        <p>Architecting a custom ERP on Lovable, GitHub and Supabase, pairing AI assisted development with the existing Microsoft environment as the next generation of the operations platform.</p>
+        <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>AI assisted dev</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Paper Boat Production Optimization</h3><span class="work-status">DMAIC</span></div>
-        <p>Lean project using 5S, PDCA, Poka-Yoke and Value Stream Mapping to eliminate waste and rebalance the production layout.</p>
+        <p>Lean project using 5S, PDCA, Poka Yoke and Value Stream Mapping to eliminate waste and rebalance the production layout.</p>
         <div class="work-metric">Quality <b>77% → 90%</b> · total profit <b>+61%</b></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Appointment Scheduling Optimization</h3><span class="work-status">Nova Scotia Health</span></div>
-        <p>Paired data-driven insight with people-centered change management to attack appointment no-shows across a public healthcare system.</p>
-        <div class="work-metric">No-show rate addressed <b>up to 30%</b></div>
+        <p>Paired data driven insight with people centered change management to attack appointment no shows across a public healthcare system.</p>
+        <div class="work-metric">No show rate addressed <b>up to 30%</b></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Selective Maintenance Planning</h3><span class="work-status">Reliability</span></div>
-        <p>Data-driven reliability model — Weibull analysis with k-out-of-n logic — plus Python and Excel optimization to maximize readiness under time and budget constraints.</p>
+        <p>Data driven reliability model, Weibull analysis with k out of n logic, plus Python and Excel optimization to maximize readiness under time and budget constraints.</p>
         <div class="work-tags"><span>Python</span><span>Weibull</span><span>Optimization</span></div>
       </div>
     </section>
@@ -411,11 +407,11 @@
 
       <div class="kicker" style="margin-top:56px;"><span class="n">05a</span><span class="t">Credentials</span></div>
       <div class="cred-list">
-        <div class="cred"><span class="name">Lean Six Sigma Green Belt</span><span class="issuer">—</span></div>
-        <div class="cred"><span class="name">ISO 9001:2015 Lead Auditor</span><span class="issuer">—</span></div>
+        <div class="cred"><span class="name">Lean Six Sigma Green Belt</span><span class="issuer"></span></div>
+        <div class="cred"><span class="name">ISO 9001:2015 Lead Auditor</span><span class="issuer"></span></div>
         <div class="cred"><span class="name">Power BI for Data Analysts</span><span class="issuer">Microsoft</span></div>
-        <div class="cred"><span class="name">Quality Management Foundations</span><span class="issuer">—</span></div>
-        <div class="cred"><span class="name">MySQL Essential Training</span><span class="issuer">—</span></div>
+        <div class="cred"><span class="name">Quality Management Foundations</span><span class="issuer"></span></div>
+        <div class="cred"><span class="name">MySQL Essential Training</span><span class="issuer"></span></div>
         <div class="cred"><span class="name">AutoCAD &amp; Fusion 360</span><span class="issuer">Autodesk</span></div>
         <div class="cred pending"><span class="name">PMP</span><span class="issuer">in progress</span></div>
       </div>
@@ -427,14 +423,14 @@
       <div class="bg-grid">
         <div class="bg-col">
           <h3>Education</h3>
-          <div class="bg-row"><div class="when">2023 — 2025</div><h4>Master of Engineering, Industrial Engineering</h4><p>Dalhousie University · Halifax, NS</p></div>
-          <div class="bg-row"><div class="when">2025 — 2027 · in progress</div><h4>MBA, Business Management</h4><p>NMIMS (Narsee Monjee Institute of Management Studies)</p></div>
-          <div class="bg-row"><div class="when">2017 — 2021</div><h4>Bachelor of Engineering, Mechanical Engineering</h4><p>Gujarat Technological University · ranked 151 of 31,163</p></div>
+          <div class="bg-row"><div class="when">2023 TO 2025</div><h4>Master of Engineering, Industrial Engineering</h4><p>Dalhousie University · Halifax, NS</p></div>
+          <div class="bg-row"><div class="when">2025 TO 2027 · in progress</div><h4>MBA, Business Management</h4><p>NMIMS (Narsee Monjee Institute of Management Studies)</p></div>
+          <div class="bg-row"><div class="when">2017 TO 2021</div><h4>Bachelor of Engineering, Mechanical Engineering</h4><p>Gujarat Technological University · ranked 151 of 31,163</p></div>
         </div>
         <div class="bg-col">
           <h3>Community</h3>
           <div class="bg-row"><div class="when">2026</div><h4>Event Volunteer, SailGP Canada</h4><p>Supported event operations at the Canada Sail Grand Prix in Halifax.</p></div>
-          <div class="bg-row"><div class="when">Aug 2024 — Jul 2025</div><h4>Volunteer of Administration, PMI Nova Scotia</h4><p>Managed chapter communications and documentation; supported event logistics and member engagement.</p></div>
+          <div class="bg-row"><div class="when">Aug 2024 TO Jul 2025</div><h4>Volunteer of Administration, PMI Nova Scotia</h4><p>Managed chapter communications and documentation; supported event logistics and member engagement.</p></div>
           <div class="bg-row"><div class="when">2024</div><h4>Volunteer, Designing Productivity Conference</h4><p>Dalhousie University · event coordination, speaker management and networking facilitation.</p></div>
         </div>
       </div>
@@ -445,7 +441,7 @@
     <section class="block contact" id="contact">
       <div class="kicker"><span class="n">07</span><span class="t">Get in touch</span></div>
       <h2>Open to transformation, process improvement and operations analytics roles.</h2>
-      <p class="sub">If you're trying to figure out why a good process keeps breaking, or you have a mess of spreadsheets that wants to be a system — I'd like to hear about it.</p>
+      <p class="sub">If you're trying to figure out why a good process keeps breaking, or you have a mess of spreadsheets that wants to be a system, I'd like to hear about it.</p>
       <div class="contact-list">
         <div class="c-row"><span class="k">Email</span><a href="mailto:jay.raval@dal.ca">jay.raval@dal.ca</a></div>
         <div class="c-row"><span class="k">Phone</span><a href="tel:+17828822694">+1 782 882 2694</a></div>
