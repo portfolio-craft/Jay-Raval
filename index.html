@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jay Raval</title>
-<meta name="description" content="Jay Raval: Transformation Analyst and Industrial Engineer in Halifax, NS. Lean Six Sigma Green Belt building automation platforms on Power Apps, Power BI and SharePoint.">
+<meta name="description" content="Jay Raval: Transformation Analyst and Industrial Engineer in Halifax, NS. Operations consulting and automation delivery on Power Apps, Power BI and SharePoint.">
 <link rel="icon" href="data:,">
 <style>
   :root{
     --paper:#F6F3EA; --paper-2:#EFEADC; --ink:#1D1A15; --ink-soft:#57524A; --faint:#938C7E;
     --line:#DED6C3; --rule:#CFC5AC;
-    --rust:#A8431A; --rust-deep:#7C3013;
+    --rust:#A8431A; --rust-deep:#7C3013; --rust-rgb:168,67,26;
     --ink-invert:#F6F3EA;
     --rail:296px; --edge:clamp(24px,5vw,64px); --content-max:700px;
+    --mx:50%; --my:50%;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -26,6 +27,9 @@
   img,svg{display:block;max-width:100%;}
   .num{font-family:Consolas,"Courier New",monospace;}
 
+  /* ---------- SCROLL PROGRESS ---------- */
+  #bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--rust);z-index:300;transition:width .08s linear;}
+
   /* ---------- SKIP LINK ---------- */
   .skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:200;}
   .skip:focus{left:16px;top:16px;}
@@ -36,7 +40,7 @@
   /* ---------- RAIL ---------- */
   .rail{position:sticky;top:0;height:100vh;padding:clamp(28px,4vw,52px) clamp(24px,3vw,40px);
     display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);}
-  .mark{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-.01em;text-decoration:none;display:block;}
+  .mark{font-weight:700;font-size:1.5rem;letter-spacing:-.01em;text-decoration:none;display:block;}
   .mark small{display:block;font-family:Consolas,"Courier New",monospace;font-weight:400;font-size:11.5px;
     letter-spacing:.06em;color:var(--faint);margin-top:8px;text-transform:none;}
   .rail-nav{margin-top:44px;}
@@ -52,8 +56,8 @@
   .rail-foot .clock{color:var(--ink-soft);margin-bottom:14px;}
   .rail-foot .clock b{color:var(--ink);font-weight:500;}
   .rail-socials{display:flex;flex-direction:column;gap:6px;margin-top:14px;}
-  .rail-socials a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;width:max-content;}
-  .rail-socials a:hover{color:var(--rust);border-color:var(--rust);}
+  .rail-socials a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;width:max-content;transition:color .15s,border-color .15s,transform .15s;}
+  .rail-socials a:hover{color:var(--rust);border-color:var(--rust);transform:translateX(3px);}
 
   .rail-toggle{display:none;}
 
@@ -68,12 +72,15 @@
   .kicker::after{content:"";flex:1;height:1px;background:var(--rule);}
 
   /* ---------- HERO ---------- */
-  .hero{padding-top:clamp(56px,10vw,104px);}
-  .hero .kicker{margin-bottom:34px;}
-  .hero h1{font-size:clamp(2.1rem,4.6vw,3.35rem);letter-spacing:-.015em;max-width:15ch;}
+  .hero{padding-top:clamp(56px,10vw,104px);position:relative;overflow:hidden;}
+  .hero-glow{position:absolute;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(480px circle at var(--mx) var(--my), rgba(var(--rust-rgb),.08), transparent 65%);
+    transition:background .15s ease-out;}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:52px;}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.2rem);letter-spacing:-.015em;max-width:16ch;}
   .hero h1 em{color:var(--rust);}
   .hero .lede{margin-top:26px;max-width:56ch;font-size:1.12rem;color:var(--ink-soft);}
-  .hero .now{margin-top:34px;font-family:Consolas,"Courier New",monospace;font-size:13px;color:var(--faint);
+  .hero .now{margin-top:30px;font-family:Consolas,"Courier New",monospace;font-size:13px;color:var(--faint);
     display:flex;flex-wrap:wrap;gap:6px 10px;}
   .hero .now b{color:var(--ink);font-weight:500;}
   .hero-links{display:flex;flex-wrap:wrap;gap:22px 30px;margin-top:38px;}
@@ -82,22 +89,49 @@
   .tlink:hover{color:var(--rust);border-color:var(--rust);}
   .tlink.quiet{color:var(--ink-soft);border-color:var(--rule);}
   .tlink.quiet:hover{color:var(--rust);border-color:var(--rust);}
+  .magnet{display:inline-block;will-change:transform;transition:transform .12s ease-out;}
+
+  /* hero chart card */
+  .hero-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px 26px 20px;
+    box-shadow:0 26px 60px -36px rgba(29,26,21,.28);max-width:460px;}
+  .hero-card .cap{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;
+    font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
+  .hero-card svg{width:100%;height:auto;}
+  .hero-card .legend{display:flex;gap:22px;margin-top:10px;font-size:12.5px;color:var(--ink-soft);}
+  .hero-card .legend span{display:flex;align-items:center;gap:7px;}
+  .hero-card .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .hero-card .badges{display:flex;gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);flex-wrap:wrap;}
+  .badge{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 14px;flex:1 1 130px;}
+  .badge .bv{font-size:1.35rem;font-weight:700;color:var(--rust);}
+  .badge .bl{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+
+  @media (min-width:1080px){
+    .hero-grid{grid-template-columns:1.05fr .95fr;align-items:center;gap:20px;}
+  }
 
   /* ---------- IMPACT ---------- */
   .impact-row{display:flex;flex-wrap:wrap;gap:0;margin-top:6px;}
-  .impact-item{flex:1 1 150px;padding:22px 26px 22px 0;border-right:1px solid var(--line);}
+  .impact-item{flex:1 1 150px;padding:22px 26px 22px 0;border-right:1px solid var(--line);
+    transition:transform .3s cubic-bezier(.2,.7,.2,1);}
   .impact-item:last-child{border-right:none;}
-  .impact-item .v{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:clamp(2.1rem,4vw,2.7rem);color:var(--ink);}
+  .impact-item .v{font-weight:700;font-size:clamp(2.1rem,4vw,2.7rem);color:var(--ink);}
   .impact-item .l{margin-top:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.45;max-width:20ch;}
   .impact-note{margin-top:30px;font-size:14.5px;color:var(--faint);max-width:60ch;}
 
-  /* ---------- APPROACH ---------- */
-  .steps{display:grid;gap:0;margin-top:4px;}
-  .step{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);}
+  /* ---------- ENGAGEMENT MODEL ---------- */
+  .steps{position:relative;margin-top:4px;padding-left:56px;}
+  .steps::before{content:"";position:absolute;left:27px;top:10px;bottom:10px;width:2px;background:var(--line);}
+  .steps .prog{position:absolute;left:27px;top:10px;width:2px;height:0;background:var(--rust);transition:height .1s linear;}
+  .step{position:relative;padding:22px 0;border-bottom:1px solid var(--line);}
   .step:first-child{padding-top:0;}
   .step:last-child{border-bottom:none;}
-  .step .sn{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-style:italic;font-weight:500;font-size:1.5rem;color:var(--rust);}
-  .step h3{font-size:1.08rem;font-weight:600;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;}
+  .step .sn{position:absolute;left:-56px;top:22px;width:30px;height:30px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;
+    font-family:Consolas,"Courier New",monospace;font-size:12px;font-weight:700;color:var(--faint);
+    transition:border-color .3s,color .3s,background .3s;}
+  .step.lit .sn{border-color:var(--rust);color:var(--rust);background:#fff;}
+  .step:first-child .sn{top:0;}
+  .step h3{font-size:1.08rem;font-weight:700;}
   .step p{margin:6px 0 0;color:var(--ink-soft);font-size:15px;max-width:56ch;}
 
   /* ---------- EXPERIENCE ---------- */
@@ -105,27 +139,41 @@
   .xp:first-of-type{padding-top:0;}
   .xp:last-child{border-bottom:none;}
   .xp .when{font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);letter-spacing:.03em;padding-top:4px;}
-  .xp .role{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:1.28rem;}
+  .xp .role{font-weight:700;font-size:1.28rem;}
   .xp .org{margin-top:4px;font-size:14.5px;color:var(--rust);font-weight:500;}
   .xp ul{margin:16px 0 0;padding:0;list-style:none;}
   .xp li{position:relative;padding-left:20px;margin-bottom:10px;color:var(--ink-soft);font-size:15.5px;}
   .xp li::before{content:"•";position:absolute;left:0;color:var(--faint);}
   .xp li b{color:var(--ink);font-weight:600;}
 
-  /* ---------- WORK ---------- */
-  .work-item{padding:34px 0;border-bottom:1px solid var(--line);}
-  .work-item:first-of-type{padding-top:0;}
+  /* ---------- CASE STUDIES ---------- */
+  .work-item{position:relative;padding:36px 30px;margin:0 -30px;border-bottom:1px solid var(--line);
+    border-radius:10px;overflow:hidden;transition:background .2s;}
+  .work-item:first-of-type{margin-top:-10px;}
   .work-item:last-child{border-bottom:none;}
-  .work-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;}
+  .work-item::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+    background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(var(--rust-rgb),.07), transparent 70%);
+    transition:opacity .25s;}
+  .work-item:hover::before{opacity:1;}
+  .work-item:hover{background:rgba(0,0,0,.012);}
+  .work-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;position:relative;}
   .work-head h3{font-size:1.32rem;font-weight:700;}
   .work-status{font-family:Consolas,"Courier New",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
     color:var(--faint);white-space:nowrap;}
   .work-status.live{color:var(--rust);}
-  .work-item p{margin:14px 0 0;color:var(--ink-soft);font-size:15.5px;max-width:62ch;}
-  .work-tags{margin-top:16px;font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);}
+  .work-fields{margin-top:16px;display:grid;gap:12px;position:relative;}
+  .wf{display:grid;grid-template-columns:120px 1fr;gap:14px;}
+  .wf .fk{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding-top:3px;}
+  .wf .fv{color:var(--ink-soft);font-size:15.5px;max-width:60ch;}
+  .work-tags{margin-top:16px;font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);position:relative;}
   .work-tags span:not(:last-child)::after{content:" / ";color:var(--rule);}
-  .work-metric{margin-top:14px;font-size:14.5px;color:var(--ink);}
-  .work-metric b{color:var(--rust);font-weight:600;}
+  .work-metric{margin-top:6px;font-size:14.5px;color:var(--ink);position:relative;}
+  .work-metric b{color:var(--rust);font-weight:700;}
+  @media (max-width:720px){
+    .work-item{margin:0;padding:30px 0;border-radius:0;}
+    .work-item:first-of-type{margin-top:0;}
+    .wf{grid-template-columns:1fr;gap:2px;}
+  }
 
   /* ---------- SKILLS ---------- */
   .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
@@ -133,6 +181,20 @@
     text-transform:uppercase;color:var(--rust);margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line);}
   .skill-col ul{list-style:none;margin:0;padding:0;}
   .skill-col li{padding:5px 0;font-size:15px;color:var(--ink-soft);}
+
+  /* toolkit scroller */
+  .toolkit{margin-top:52px;}
+  .toolkit .kicker{margin-bottom:16px;}
+  .toolkit-hint{font-size:12.5px;color:var(--faint);margin-bottom:14px;}
+  .toolkit-scroll{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:14px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+    mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 24px),transparent);}
+  .toolkit-scroll::-webkit-scrollbar{height:5px;}
+  .toolkit-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+  .tk-item{scroll-snap-align:start;flex:0 0 auto;padding:10px 30px 10px 0;font-size:clamp(1.3rem,3vw,1.9rem);
+    font-weight:700;color:var(--line);white-space:nowrap;transition:color .3s;cursor:default;}
+  .tk-item:hover{color:var(--rust);}
 
   /* ---------- CREDENTIALS ---------- */
   .cred-list{display:grid;gap:0;}
@@ -151,7 +213,7 @@
   .bg-row:first-of-type{padding-top:0;}
   .bg-col:last-child .bg-row:last-child{border-bottom:none;}
   .bg-row .when{font-family:Consolas,"Courier New",monospace;font-size:11.5px;color:var(--rust);}
-  .bg-row h4{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;font-size:1.02rem;margin-top:6px;}
+  .bg-row h4{font-weight:700;font-size:1.02rem;margin-top:6px;}
   .bg-row p{margin:4px 0 0;font-size:14px;color:var(--ink-soft);}
   @media (max-width:720px){.bg-grid{grid-template-columns:1fr;gap:0;} .bg-col+.bg-col{margin-top:40px;}}
 
@@ -162,18 +224,20 @@
   .beyond span.i:not(:last-child)::after{content:"·";margin-left:16px;color:var(--rule);}
 
   /* ---------- CONTACT ---------- */
-  .contact{background:var(--ink);color:var(--ink-invert);border-top:none;}
+  .contact{background:var(--ink);color:var(--ink-invert);border-top:none;position:relative;overflow:hidden;}
+  .contact-glow{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(520px circle at var(--mx) var(--my), rgba(224,164,129,.10), transparent 65%);}
   .contact .kicker .t{color:#8A8478;}
   .contact .kicker::after{background:#3B372E;}
-  .contact h2{font-size:clamp(2rem,5vw,3.2rem);max-width:14ch;letter-spacing:-.015em;}
+  .contact h2{font-size:clamp(2rem,5vw,3.2rem);max-width:16ch;letter-spacing:-.015em;position:relative;}
   .contact h2 em{color:#E0A481;}
-  .contact .sub{margin-top:22px;max-width:52ch;color:#C7C1B2;font-size:1.05rem;}
-  .contact-list{margin-top:48px;display:grid;gap:0;}
+  .contact .sub{margin-top:22px;max-width:52ch;color:#C7C1B2;font-size:1.05rem;position:relative;}
+  .contact-list{margin-top:48px;display:grid;gap:0;position:relative;}
   .c-row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:20px 0;
     border-bottom:1px solid #35322A;flex-wrap:wrap;}
   .c-row:last-child{border-bottom:none;}
   .c-row .k{font-family:Consolas,"Courier New",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#8A8478;}
-  .c-row a{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-size:1.3rem;font-weight:700;color:var(--ink-invert);text-decoration:none;
+  .c-row a{font-size:1.3rem;font-weight:700;color:var(--ink-invert);text-decoration:none;
     border-bottom:1.5px solid transparent;transition:color .18s,border-color .18s;}
   .c-row a:hover{color:#E0A481;border-color:#E0A481;}
 
@@ -182,10 +246,24 @@
 
   [data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1);}
   [data-reveal].in{opacity:1;transform:none;}
+  [data-reveal-group] > *{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1);}
+  [data-reveal-group].in > *{opacity:1;transform:none;}
+  [data-reveal-group].in > *:nth-child(1){transition-delay:.02s;}
+  [data-reveal-group].in > *:nth-child(2){transition-delay:.09s;}
+  [data-reveal-group].in > *:nth-child(3){transition-delay:.16s;}
+  [data-reveal-group].in > *:nth-child(4){transition-delay:.23s;}
+  [data-reveal-group].in > *:nth-child(5){transition-delay:.30s;}
+
+  .chart-line{stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1);}
+  .hero-card.in .chart-line{stroke-dashoffset:0;}
+  .chart-dot{opacity:0;transition:opacity .4s ease .9s;}
+  .hero-card.in .chart-dot{opacity:1;}
 
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;}
-    [data-reveal]{opacity:1!important;transform:none!important;}
+    [data-reveal],[data-reveal-group]>*{opacity:1!important;transform:none!important;}
+    .chart-line{stroke-dashoffset:0!important;}
+    .chart-dot{opacity:1!important;}
     html{scroll-behavior:auto;}
   }
 
@@ -215,6 +293,7 @@
 </style>
 </head>
 <body>
+<div id="bar"></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="shell">
@@ -228,9 +307,9 @@
         <ol>
           <li><a href="#top">Intro</a></li>
           <li><a href="#impact">Impact</a></li>
-          <li><a href="#approach">Approach</a></li>
+          <li><a href="#approach">Engagement model</a></li>
           <li><a href="#experience">Experience</a></li>
-          <li><a href="#work">Selected work</a></li>
+          <li><a href="#work">Case studies</a></li>
           <li><a href="#skills">Capabilities</a></li>
           <li><a href="#background">Background</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -252,14 +331,39 @@
 
     <!-- INTRO -->
     <section class="block hero" id="top">
-      <div class="measure">
-        <div class="kicker"><span class="n">00</span><span class="t">Halifax, Nova Scotia</span></div>
-        <h1>I make the way work <em>actually happens</em> match the way it should.</h1>
-        <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who spends most days inside operations that are held together by spreadsheets and habit. I rebuild them as systems that run without someone remembering to update them.</p>
-        <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, owning the platform across three Atlantic Canada branches.</p>
-        <div class="hero-links">
-          <a class="tlink" href="#contact">Get in touch</a>
-          <a class="tlink quiet" href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener">Download résumé ↗</a>
+      <div class="hero-glow" id="heroGlow"></div>
+      <div class="hero-grid">
+        <div class="measure">
+          <div class="kicker"><span class="n">00</span><span class="t">Halifax, Nova Scotia · Operations Consulting</span></div>
+          <h1>I turn manual operations into systems leadership can <em>actually trust</em>.</h1>
+          <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who advises operations leaders on where a process is quietly failing, then builds the platform that fixes it for good. Process design, change management and hands on delivery on the Microsoft stack, from one person.</p>
+          <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, running platform strategy end to end across three Atlantic Canada branches.</p>
+          <div class="hero-links">
+            <a class="tlink magnet" href="#contact" data-magnet>Get in touch</a>
+            <a class="tlink quiet magnet" href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener" data-magnet>Download résumé ↗</a>
+          </div>
+        </div>
+
+        <div class="hero-card" data-reveal id="heroCard">
+          <div class="cap"><span>Operational reliability</span><span>12 month view</span></div>
+          <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg" aria-label="Chart showing operations trending from unstable to stable and improving after intervention">
+            <line x1="0" y1="150" x2="420" y2="150" stroke="#DED6C3" stroke-width="1"/>
+            <path class="chart-line" d="M0,120 L35,132 L70,104 L105,138 L140,112 L175,128 L200,118"
+              fill="none" stroke="#938C7E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="chart-line" d="M200,118 C 240,96 270,60 310,44 C 345,30 385,22 420,16"
+              fill="none" stroke="#A8431A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transition-delay:.3s"/>
+            <line x1="200" y1="10" x2="200" y2="150" stroke="#DED6C3" stroke-width="1" stroke-dasharray="3 5"/>
+            <circle class="chart-dot" cx="420" cy="16" r="5" fill="#A8431A"/>
+            <text x="204" y="28" font-family="Consolas, monospace" font-size="10" fill="#938C7E">platform live</text>
+          </svg>
+          <div class="legend">
+            <span><i class="dot" style="background:#938C7E"></i>Before</span>
+            <span><i class="dot" style="background:#A8431A"></i>After</span>
+          </div>
+          <div class="badges">
+            <div class="badge"><div class="bv">+18%</div><div class="bl">Material utilization lift</div></div>
+            <div class="badge"><div class="bv">+61%</div><div class="bl">Profit on optimized line</div></div>
+          </div>
         </div>
       </div>
     </section>
@@ -270,24 +374,28 @@
       <div class="measure">
         <h2 style="font-size:1.5rem;font-weight:700;">What one analyst shipped, solo, in fourteen months</h2>
       </div>
-      <div class="impact-row" data-reveal>
-        <div class="impact-item"><div class="v num">7</div><div class="l">Power Apps designed and built for shop floor use</div></div>
-        <div class="impact-item"><div class="v num">18</div><div class="l">Power Automate flows running in production</div></div>
-        <div class="impact-item"><div class="v num">6</div><div class="l">Power BI dashboards leadership checks daily</div></div>
-        <div class="impact-item"><div class="v num">3</div><div class="l">Branches on one shared operations platform</div></div>
-        <div class="impact-item"><div class="v num">1</div><div class="l">SharePoint environment, owned end to end</div></div>
+      <div class="impact-row" data-reveal-group>
+        <div class="impact-item"><div class="v num" data-count="7">0</div><div class="l">Power Apps designed and built for shop floor use</div></div>
+        <div class="impact-item"><div class="v num" data-count="18">0</div><div class="l">Power Automate flows running in production</div></div>
+        <div class="impact-item"><div class="v num" data-count="6">0</div><div class="l">Power BI dashboards leadership checks daily</div></div>
+        <div class="impact-item"><div class="v num" data-count="3">0</div><div class="l">Branches on one shared operations platform</div></div>
+        <div class="impact-item"><div class="v num" data-count="1">0</div><div class="l">SharePoint environment, owned end to end</div></div>
       </div>
       <p class="impact-note">Plus the layer that makes any of it stick: SOPs, Visio process maps, project plans, and being the first call when something breaks.</p>
     </section>
 
-    <!-- APPROACH -->
+    <!-- ENGAGEMENT MODEL -->
     <section class="block" id="approach">
-      <div class="kicker"><span class="n">02</span><span class="t">How I work</span></div>
-      <div class="measure steps">
-        <div class="step" data-reveal><span class="sn">a</span><div><h3>Map it as it is</h3><p>Walk the floor, watch the workaround, draw the current state process before touching a single tool.</p></div></div>
-        <div class="step" data-reveal><span class="sn">b</span><div><h3>Design the future state</h3><p>Sketch what the process should look like once the manual steps are gone, and check it against how people actually work.</p></div></div>
-        <div class="step" data-reveal><span class="sn">c</span><div><h3>Build it in the Microsoft stack</h3><p>Power Apps for the interface, Power Automate underneath, SharePoint as the backbone. Nothing exotic, everything supportable.</p></div></div>
-        <div class="step" data-reveal><span class="sn">d</span><div><h3>Make adoption someone's job, not luck</h3><p>SOPs, training, and staying the first responder until the new way is just "the way."</p></div></div>
+      <div class="kicker"><span class="n">02</span><span class="t">Engagement model</span></div>
+      <div class="measure">
+        <p style="color:var(--ink-soft);font-size:15.5px;margin:0 0 8px;">The same four phases run through every engagement, whether the client is a branch manager or a hospital scheduling team.</p>
+      </div>
+      <div class="steps" id="steps">
+        <div class="prog" id="stepsProg"></div>
+        <div class="step" data-step><span class="sn">01</span><h3>Diagnose the current state</h3><p>Walk the floor, watch the actual workaround, and map the process as it truly runs before touching a single tool.</p></div>
+        <div class="step" data-step><span class="sn">02</span><h3>Design the target state</h3><p>Sketch what good looks like once the manual steps are gone, then test it against how people really work, not how the org chart says they work.</p></div>
+        <div class="step" data-step><span class="sn">03</span><h3>Deploy on a stack you can support</h3><p>Power Apps for the interface, Power Automate underneath, SharePoint as the backbone. Nothing exotic, everything a normal IT team can maintain.</p></div>
+        <div class="step" data-step><span class="sn">04</span><h3>Sustain the change</h3><p>SOPs, training, and staying the first call when something breaks, until the new way is simply the way things are done.</p></div>
       </div>
     </section>
 
@@ -334,55 +442,79 @@
       </div>
     </section>
 
-    <!-- WORK -->
+    <!-- CASE STUDIES -->
     <section class="block" id="work">
-      <div class="kicker"><span class="n">04</span><span class="t">Selected work</span></div>
+      <div class="kicker"><span class="n">04</span><span class="t">Case studies</span></div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Part Request System</h3><span class="work-status live">Live</span></div>
-        <p>Owned the full lifecycle: mapped the current state process in Visio, designed the future state, built canvas apps backed by 18 automated flows for notifications, timestamps and sync, then rolled it out across branches with shop floor displays.</p>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">Parts requests ran on phone calls and memory, with no shop floor visibility into status.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Mapped the current state in Visio, designed the future state, then built canvas apps backed by 18 automated flows for notifications, timestamps and sync.</span></div>
+        </div>
         <div class="work-tags"><span>Power Apps</span><span>Power Automate</span><span>Visio</span><span>3 branches</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Dispatch System</h3><span class="work-status">Built</span></div>
-        <p>Mapped, designed and built the field service dispatch workflow, covering customer list, machine history and dispatch log, on a modern code centric stack rather than the low code toolkit.</p>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">Field service dispatch needed customer, machine and job history in one place, faster than the low code toolkit could deliver.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Mapped, designed and built the workflow on a modern code centric stack instead, covering customer list, machine history and dispatch log.</span></div>
+        </div>
         <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>GitHub</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>PSSR Sales Pipeline &amp; Dashboard</h3><span class="work-status live">Live</span></div>
-        <p>Rebuilt the sales funnel list from the ground up and designed a Power BI dashboard, including Dock &amp; Door, refreshing daily with zero manual updates for live pipeline visibility.</p>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">Leadership had no live view of the sales funnel, including Dock &amp; Door, without someone manually compiling it.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Rebuilt the sales funnel list from the ground up and designed a Power BI dashboard refreshing daily with zero manual updates.</span></div>
+        </div>
         <div class="work-tags"><span>Power BI</span><span>Daily auto refresh</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>SOP Library &amp; Process Documentation</h3><span class="work-status live">Live</span></div>
-        <p>Authored and maintain the full SOP pack and Visio current and future state maps, the change management layer that actually drives adoption of every other tool on this list.</p>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">New tools were shipping faster than anyone could document how to use them.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Authored and maintain the full SOP pack and Visio current and future state maps, the change management layer that actually drives adoption.</span></div>
+        </div>
         <div class="work-tags"><span>SOPs</span><span>Visio</span><span>Change management</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>ERP System: AI Assisted Build</h3><span class="work-status">In progress</span></div>
-        <p>Architecting a custom ERP on Lovable, GitHub and Supabase, pairing AI assisted development with the existing Microsoft environment as the next generation of the operations platform.</p>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">The current Microsoft environment needs a system of record that scales past the next round of growth.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Architecting a custom ERP on Lovable, GitHub and Supabase, pairing AI assisted development with the existing Microsoft environment.</span></div>
+        </div>
         <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>AI assisted dev</span></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Paper Boat Production Optimization</h3><span class="work-status">DMAIC</span></div>
-        <p>Lean project using 5S, PDCA, Poka Yoke and Value Stream Mapping to eliminate waste and rebalance the production layout.</p>
-        <div class="work-metric">Quality <b>77% → 90%</b> · total profit <b>+61%</b></div>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">A hands on production line was losing margin to waste and an unbalanced layout.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Ran a DMAIC project using 5S, PDCA, Poka Yoke and Value Stream Mapping to eliminate waste and rebalance the line.</span></div>
+        </div>
+        <div class="work-metric">Result: quality <b>77% → 90%</b> · total profit <b>+61%</b></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Appointment Scheduling Optimization</h3><span class="work-status">Nova Scotia Health</span></div>
-        <p>Paired data driven insight with people centered change management to attack appointment no shows across a public healthcare system.</p>
-        <div class="work-metric">No show rate addressed <b>up to 30%</b></div>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">A public healthcare system was losing capacity to appointment no shows.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Paired data driven insight with people centered change management to target the highest risk scheduling gaps.</span></div>
+        </div>
+        <div class="work-metric">Result: no show rate addressed <b>up to 30%</b></div>
       </div>
 
       <div class="work-item" data-reveal>
         <div class="work-head"><h3>Selective Maintenance Planning</h3><span class="work-status">Reliability</span></div>
-        <p>Data driven reliability model, Weibull analysis with k out of n logic, plus Python and Excel optimization to maximize readiness under time and budget constraints.</p>
+        <div class="work-fields">
+          <div class="wf"><span class="fk">Challenge</span><span class="fv">Maintenance budget and crew time were fixed, but equipment readiness targets were not being met.</span></div>
+          <div class="wf"><span class="fk">What I did</span><span class="fv">Built a data driven reliability model, Weibull analysis with k out of n logic, plus Python and Excel optimization to maximize readiness.</span></div>
+        </div>
         <div class="work-tags"><span>Python</span><span>Weibull</span><span>Optimization</span></div>
       </div>
     </section>
@@ -405,7 +537,29 @@
         </div>
       </div>
 
-      <div class="kicker" style="margin-top:56px;"><span class="n">05a</span><span class="t">Credentials</span></div>
+      <div class="toolkit">
+        <div class="kicker"><span class="n">05a</span><span class="t">Toolkit</span></div>
+        <p class="toolkit-hint">Scroll for the full stack.</p>
+        <div class="toolkit-scroll" id="toolkitScroll">
+          <div class="tk-item">Power BI</div>
+          <div class="tk-item">Power Apps</div>
+          <div class="tk-item">Power Automate</div>
+          <div class="tk-item">SharePoint</div>
+          <div class="tk-item">SQL</div>
+          <div class="tk-item">Python</div>
+          <div class="tk-item">Tableau</div>
+          <div class="tk-item">Excel</div>
+          <div class="tk-item">SAP ERP</div>
+          <div class="tk-item">NetSuite</div>
+          <div class="tk-item">Visio</div>
+          <div class="tk-item">Lovable</div>
+          <div class="tk-item">Supabase</div>
+          <div class="tk-item">GitHub</div>
+          <div class="tk-item">MS Project</div>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-top:56px;"><span class="n">05b</span><span class="t">Credentials</span></div>
       <div class="cred-list">
         <div class="cred"><span class="name">Lean Six Sigma Green Belt</span><span class="issuer"></span></div>
         <div class="cred"><span class="name">ISO 9001:2015 Lead Auditor</span><span class="issuer"></span></div>
@@ -439,14 +593,15 @@
 
     <!-- CONTACT -->
     <section class="block contact" id="contact">
+      <div class="contact-glow" id="contactGlow"></div>
       <div class="kicker"><span class="n">07</span><span class="t">Get in touch</span></div>
-      <h2>Open to transformation, process improvement and operations analytics roles.</h2>
+      <h2>Open to transformation, process improvement and operations consulting roles.</h2>
       <p class="sub">If you're trying to figure out why a good process keeps breaking, or you have a mess of spreadsheets that wants to be a system, I'd like to hear about it.</p>
       <div class="contact-list">
-        <div class="c-row"><span class="k">Email</span><a href="mailto:jay.raval@dal.ca">jay.raval@dal.ca</a></div>
-        <div class="c-row"><span class="k">Phone</span><a href="tel:+17828822694">+1 782 882 2694</a></div>
-        <div class="c-row"><span class="k">LinkedIn</span><a href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener">linkedin.com/in/jayr28</a></div>
-        <div class="c-row"><span class="k">GitHub</span><a href="https://github.com/JaysShadow" target="_blank" rel="noopener">github.com/JaysShadow</a></div>
+        <div class="c-row"><span class="k">Email</span><a class="magnet" href="mailto:jay.raval@dal.ca" data-magnet>jay.raval@dal.ca</a></div>
+        <div class="c-row"><span class="k">Phone</span><a class="magnet" href="tel:+17828822694" data-magnet>+1 782 882 2694</a></div>
+        <div class="c-row"><span class="k">LinkedIn</span><a class="magnet" href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener" data-magnet>linkedin.com/in/jayr28</a></div>
+        <div class="c-row"><span class="k">GitHub</span><a class="magnet" href="https://github.com/JaysShadow" target="_blank" rel="noopener" data-magnet>github.com/JaysShadow</a></div>
       </div>
     </section>
 
@@ -460,6 +615,15 @@
 <script>
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* scroll progress bar */
+  var bar=document.getElementById('bar');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-innerHeight;
+    bar.style.width=(h>0?(scrollY/h*100):0)+'%';
+  }
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
   /* mobile rail toggle */
   var rail=document.getElementById('rail'), toggle=document.getElementById('railToggle');
@@ -484,12 +648,12 @@
   }
   tick(); setInterval(tick, 30000);
 
-  /* reveal on scroll */
+  /* reveal on scroll (single elements + staggered groups) */
   var io=new IntersectionObserver(function(en){ en.forEach(function(e){
     if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },
     {threshold:.12,rootMargin:'0px 0px -6% 0px'});
-  document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
-  if(reduce){ document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); }); }
+  document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach(function(el){ io.observe(el); });
+  if(reduce){ document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach(function(el){ el.classList.add('in'); }); }
 
   /* active nav link */
   var links=[].slice.call(document.querySelectorAll('.rail-nav a'));
@@ -499,6 +663,84 @@
       links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')===id); }); } }); },
     {rootMargin:'-40% 0px -55% 0px'});
   secs.forEach(function(s){ if(s) spy.observe(s); });
+
+  /* count-up KPIs */
+  function countUp(el){
+    var target=+el.dataset.count, dur=1100, start=performance.now();
+    if(reduce){ el.textContent=target; return; }
+    (function step(now){
+      var p=Math.min((now-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*e);
+      if(p<1) requestAnimationFrame(step);
+    })(start);
+  }
+  var cio=new IntersectionObserver(function(en){ en.forEach(function(e){
+    if(e.isIntersecting){ countUp(e.target); cio.unobserve(e.target); } }); },{threshold:.6});
+  document.querySelectorAll('.v[data-count]').forEach(function(el){ cio.observe(el); });
+
+  /* hero chart draw in */
+  var heroCard=document.getElementById('heroCard');
+  if(heroCard){
+    var hio=new IntersectionObserver(function(en){ en.forEach(function(e){
+      if(e.isIntersecting){ heroCard.classList.add('in'); hio.unobserve(heroCard); } }); },{threshold:.4});
+    hio.observe(heroCard);
+  }
+
+  /* engagement model scroll progress line */
+  var stepsEl=document.getElementById('steps'), prog=document.getElementById('stepsProg');
+  var stepEls=[].slice.call(document.querySelectorAll('[data-step]'));
+  function drawSteps(){
+    if(!stepsEl) return;
+    var r=stepsEl.getBoundingClientRect();
+    var visible=Math.min(Math.max(innerHeight*0.68 - r.top, 0), r.height);
+    prog.style.height=visible+'px';
+    stepEls.forEach(function(s){
+      s.classList.toggle('lit', s.getBoundingClientRect().top < innerHeight*0.7);
+    });
+  }
+  if(reduce){ if(prog) prog.style.height='100%'; stepEls.forEach(function(s){ s.classList.add('lit'); }); }
+  else{ addEventListener('scroll', drawSteps, {passive:true}); drawSteps(); }
+
+  /* cursor ambient glow: hero + contact */
+  if(canHover && !reduce){
+    var heroGlow=document.getElementById('heroGlow'), heroSec=document.getElementById('top');
+    if(heroGlow && heroSec){
+      heroSec.addEventListener('mousemove', function(ev){
+        var r=heroSec.getBoundingClientRect();
+        heroGlow.style.setProperty('--mx', (ev.clientX-r.left)+'px');
+        heroGlow.style.setProperty('--my', (ev.clientY-r.top)+'px');
+      });
+    }
+    var cGlow=document.getElementById('contactGlow'), cSec=document.getElementById('contact');
+    if(cGlow && cSec){
+      cSec.addEventListener('mousemove', function(ev){
+        var r=cSec.getBoundingClientRect();
+        cGlow.style.setProperty('--mx', (ev.clientX-r.left)+'px');
+        cGlow.style.setProperty('--my', (ev.clientY-r.top)+'px');
+      });
+    }
+    /* spotlight on case study rows */
+    document.querySelectorAll('.work-item').forEach(function(item){
+      item.addEventListener('mousemove', function(ev){
+        var r=item.getBoundingClientRect();
+        item.style.setProperty('--mx', (ev.clientX-r.left)+'px');
+        item.style.setProperty('--my', (ev.clientY-r.top)+'px');
+      });
+    });
+  }
+
+  /* magnetic buttons */
+  if(canHover && !reduce){
+    document.querySelectorAll('[data-magnet]').forEach(function(btn){
+      btn.addEventListener('mousemove', function(ev){
+        var r=btn.getBoundingClientRect();
+        var dx=(ev.clientX-(r.left+r.width/2))*.25;
+        var dy=(ev.clientY-(r.top+r.height/2))*.35;
+        btn.style.transform='translate('+dx+'px,'+dy+'px)';
+      });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform='translate(0,0)'; });
+    });
+  }
 })();
 </script>
 </body>
