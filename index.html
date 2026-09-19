@@ -14,20 +14,35 @@
 <meta name="twitter:description" content="Transformation Analyst and Industrial Engineer in Halifax, NS.">
 <meta name="theme-color" content="#1D1A15">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D1A15'/%3E%3Ctext x='32' y='43' font-family='Segoe UI, Arial, sans-serif' font-size='26' font-weight='700' fill='%23F6F3EA' text-anchor='middle'%3EJR%3C/text%3E%3C/svg%3E">
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem('jr-theme');
+    if(!t){ t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+    document.documentElement.setAttribute('data-theme', t);
+  }catch(e){}
+})();
+</script>
 <style>
   :root{
-    --paper:#F6F3EA; --paper-2:#EFEADC; --ink:#1D1A15; --ink-soft:#57524A; --faint:#938C7E;
-    --line:#DED6C3; --rule:#CFC5AC;
+    --paper:#F6F3EA; --paper-rgb:246,243,234; --paper-2:#EFEADC; --ink:#1D1A15; --ink-soft:#57524A; --faint:#938C7E;
+    --line:#DED6C3; --rule:#CFC5AC; --card:#FFFFFF; --hover-tint:rgba(0,0,0,.012);
     --rust:#A8431A; --rust-deep:#7C3013; --rust-rgb:168,67,26;
     --ink-invert:#F6F3EA;
-    --rail:296px; --edge:clamp(24px,5vw,64px); --content-max:700px;
+    --content-max:700px;
     --mx:50%; --my:50%;
+  }
+  :root[data-theme="dark"]{
+    --paper:#17140F; --paper-rgb:23,20,15; --paper-2:#1E1A14; --ink:#F1ECE1; --ink-soft:#C7C1B2; --faint:#8A8478;
+    --line:#332E24; --rule:#443D2F; --card:#221D16; --hover-tint:rgba(255,255,255,.035);
+    --rust:#E0824F; --rust-deep:#C2622E; --rust-rgb:224,130,79;
+    --ink-invert:#17140F;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{margin:0;background:var(--paper);color:var(--ink);
     font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-size:17px;line-height:1.6;
-    -webkit-font-smoothing:antialiased;}
+    -webkit-font-smoothing:antialiased;transition:background .25s,color .25s;}
   a{color:inherit;}
   h1,h2,h3{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;font-weight:700;line-height:1.05;margin:0;}
   em{font-style:italic;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;}
@@ -42,41 +57,41 @@
   .skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:200;}
   .skip:focus{left:16px;top:16px;}
 
-  /* ---------- LAYOUT ---------- */
-  .shell{display:grid;grid-template-columns:var(--rail) 1fr;min-height:100vh;}
-
-  /* ---------- RAIL ---------- */
-  .rail{position:sticky;top:0;height:100vh;padding:clamp(28px,4vw,52px) clamp(24px,3vw,40px);
-    display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);}
-  .mark{font-weight:700;font-size:1.5rem;letter-spacing:-.01em;text-decoration:none;display:block;}
-  .mark small{display:block;font-family:Consolas,"Courier New",monospace;font-weight:400;font-size:11.5px;
-    letter-spacing:.06em;color:var(--faint);margin-top:8px;text-transform:none;}
-  .rail-nav{margin-top:44px;}
-  .rail-nav ol{list-style:none;margin:0;padding:0;counter-reset:sec;}
-  .rail-nav li{counter-increment:sec;margin-bottom:3px;}
-  .rail-nav a{display:flex;gap:12px;align-items:baseline;padding:7px 2px;font-size:14.5px;color:var(--ink-soft);
-    text-decoration:none;border-radius:2px;transition:color .15s,transform .15s,padding-left .15s;}
-  .rail-nav a::before{content:counter(sec,decimal-leading-zero);font-family:Consolas,"Courier New",monospace;
-    font-size:11.5px;color:var(--faint);transition:color .15s;}
-  .rail-nav a:hover,.rail-nav a.on{color:var(--rust);padding-left:6px;}
-  .rail-nav a:hover::before,.rail-nav a.on::before{color:var(--rust);}
-  .rail-foot{font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);}
-  .rail-foot .clock{color:var(--ink-soft);margin-bottom:14px;}
-  .rail-foot .clock b{color:var(--ink);font-weight:500;}
-  .rail-socials{display:flex;flex-direction:column;gap:6px;margin-top:14px;}
-  .rail-socials a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;width:max-content;transition:color .15s,border-color .15s,transform .15s;}
-  .rail-socials a:hover{color:var(--rust);border-color:var(--rust);transform:translateX(3px);}
-  .icon-row{display:flex;gap:9px;margin-bottom:16px;}
-  .icon-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
-    border:1.5px solid var(--line);color:var(--ink-soft);transition:border-color .2s,color .2s,transform .2s,background .2s;}
-  .icon-btn svg{width:16px;height:16px;}
-  .icon-btn:hover{border-color:var(--rust);color:var(--rust);transform:translateY(-2px);background:#fff;}
-
-  .rail-toggle{display:none;}
+  /* ---------- TOP NAV ---------- */
+  .topnav{position:sticky;top:0;z-index:90;background:rgba(var(--paper-rgb),.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);}
+  .topnav-in{max-width:1180px;margin:0 auto;padding:15px clamp(20px,4vw,48px);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;}
+  .topnav .mark{font-weight:700;font-size:1.1rem;letter-spacing:-.01em;text-decoration:none;flex:none;}
+  .topnav-links{display:flex;gap:2px;flex-wrap:wrap;}
+  .topnav-links a{padding:8px 12px;font-size:13.5px;font-weight:500;color:var(--ink-soft);text-decoration:none;
+    border-radius:7px;transition:color .15s,background .15s;white-space:nowrap;}
+  .topnav-links a:hover{color:var(--ink);background:var(--hover-tint);}
+  .topnav-links a.on{color:var(--rust);background:rgba(var(--rust-rgb),.09);}
+  .topnav-actions{display:flex;align-items:center;gap:8px;flex:none;}
+  .nav-icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;
+    justify-content:center;color:var(--ink-soft);background:var(--card);transition:border-color .2s,color .2s,transform .2s;
+    cursor:pointer;flex:none;}
+  .nav-icon-btn svg{width:16px;height:16px;}
+  .nav-icon-btn:hover{border-color:var(--rust);color:var(--rust);transform:translateY(-1px);}
+  .ti-moon{display:none;}
+  :root[data-theme="dark"] .ti-sun{display:none;}
+  :root[data-theme="dark"] .ti-moon{display:block;}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:7px;
+    font-family:Consolas,"Courier New",monospace;font-size:12px;padding:8px 12px;color:var(--ink);cursor:pointer;}
+  @media (max-width:880px){
+    .topnav-links{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);
+      flex-direction:column;gap:0;padding:6px clamp(20px,4vw,48px) 18px;display:none;
+      box-shadow:0 20px 40px -30px rgba(0,0,0,.3);}
+    .topnav-links.open{display:flex;}
+    .topnav-links a{padding:13px 4px;border-bottom:1px solid var(--line);border-radius:0;}
+    .nav-toggle{display:block;}
+  }
 
   /* ---------- MAIN ---------- */
   main{min-width:0;}
-  .block{padding:clamp(64px,9vw,116px) clamp(24px,6vw,88px);max-width:calc(var(--content-max) + 88px + 88px);}
+  .block{padding:clamp(64px,9vw,116px) clamp(24px,6vw,88px);max-width:calc(var(--content-max) + 88px + 88px);
+    margin-inline:auto;}
   .block + .block{border-top:1px solid var(--line);}
   .measure{max-width:var(--content-max);}
   .kicker{display:flex;align-items:baseline;gap:14px;margin-bottom:28px;}
@@ -91,7 +106,7 @@
     transition:background .15s ease-out;}
   .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:52px;}
   .status-badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:22px;padding:7px 14px 7px 10px;
-    border:1px solid var(--line);border-radius:999px;background:#fff;
+    border:1px solid var(--line);border-radius:999px;background:var(--card);
     font-family:Consolas,"Courier New",monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
   .status-dot{width:7px;height:7px;border-radius:50%;background:#3F7D4E;flex:none;}
   .status-dot.pulse{animation:sdpulse 2.2s ease-out infinite;}
@@ -102,20 +117,29 @@
   .hero .now{margin-top:30px;font-family:Consolas,"Courier New",monospace;font-size:13px;color:var(--faint);
     display:flex;flex-wrap:wrap;gap:6px 10px;}
   .hero .now b{color:var(--ink);font-weight:500;}
-  .hero-links{display:flex;flex-wrap:wrap;gap:22px 30px;margin-top:38px;}
-  .tlink{font-size:15px;font-weight:500;color:var(--ink);text-decoration:none;padding-bottom:3px;
-    border-bottom:1.5px solid var(--ink);transition:color .18s,border-color .18s;}
-  .tlink:hover{color:var(--rust);border-color:var(--rust);}
-  .tlink.quiet{color:var(--ink-soft);border-color:var(--rule);}
-  .tlink.quiet:hover{color:var(--rust);border-color:var(--rust);}
-  .magnet{display:inline-block;will-change:transform;transition:transform .12s ease-out;}
   .fact-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
   .fact-pill{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;
-    color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:rgba(255,255,255,.5);}
+    color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:var(--card);}
+
+  .btn-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;font-size:14px;font-weight:600;
+    text-decoration:none;will-change:transform;transition:transform .18s,box-shadow .18s,background .18s,color .18s,border-color .18s;}
+  .btn.solid{background:var(--ink);color:var(--paper);box-shadow:0 14px 30px -16px rgba(0,0,0,.5);}
+  .btn.solid:hover{background:var(--rust);color:#fff;box-shadow:0 18px 36px -16px rgba(var(--rust-rgb),.55);}
+  .btn.outline{border:1.5px solid var(--line);color:var(--ink);background:var(--card);}
+  .btn.outline:hover{border-color:var(--rust);color:var(--rust);}
+
+  .follow-row{display:flex;align-items:center;gap:14px;margin-top:30px;}
+  .follow-label{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .icon-row{display:flex;gap:9px;}
+  .icon-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+    border:1.5px solid var(--line);color:var(--ink-soft);transition:border-color .2s,color .2s,transform .2s,background .2s;}
+  .icon-btn svg{width:16px;height:16px;}
+  .icon-btn:hover{border-color:var(--rust);color:var(--rust);transform:translateY(-2px);background:var(--card);}
 
   /* hero chart card */
-  .hero-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px 26px 20px;
-    box-shadow:0 26px 60px -36px rgba(29,26,21,.28);max-width:460px;}
+  .hero-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:26px 26px 20px;
+    box-shadow:0 26px 60px -36px rgba(0,0,0,.35);max-width:460px;}
   .hero-card .cap{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;
     font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);}
   .hero-card svg{width:100%;height:auto;}
@@ -139,6 +163,14 @@
   .impact-item .v{font-weight:700;font-size:clamp(2.1rem,4vw,2.7rem);color:var(--ink);}
   .impact-item .l{margin-top:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.45;max-width:20ch;}
   .impact-note{margin-top:30px;font-size:14.5px;color:var(--faint);max-width:60ch;}
+  .focus-card{margin-top:32px;padding:22px 24px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;max-width:480px;}
+  .focus-label{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--rust);margin-bottom:12px;}
+  .focus-card ul{margin:0;padding:0;list-style:none;}
+  .focus-card li{position:relative;padding-left:18px;margin-bottom:8px;font-size:14.5px;color:var(--ink-soft);}
+  .focus-card li:last-child{margin-bottom:0;}
+  .focus-card li::before{content:"•";position:absolute;left:0;color:var(--rust);}
 
   /* ---------- ENGAGEMENT MODEL ---------- */
   .steps{position:relative;margin-top:4px;padding-left:56px;}
@@ -151,7 +183,7 @@
     background:var(--paper);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;
     font-family:Consolas,"Courier New",monospace;font-size:12px;font-weight:700;color:var(--faint);
     transition:border-color .3s,color .3s,background .3s;}
-  .step.lit .sn{border-color:var(--rust);color:var(--rust);background:#fff;}
+  .step.lit .sn{border-color:var(--rust);color:var(--rust);background:var(--card);}
   .step:first-child .sn{top:0;}
   .step h3{font-size:1.08rem;font-weight:700;}
   .step p{margin:6px 0 0;color:var(--ink-soft);font-size:15px;max-width:56ch;}
@@ -171,14 +203,14 @@
   .journey-node{position:absolute;transform:translate(-50%,-50%);width:130px;}
   .jinner{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;}
   .journey-node .jy{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.06em;color:var(--rust);font-weight:700;}
-  .jbadge{width:48px;height:48px;border-radius:12px;background:#fff;border:1.5px solid var(--line);
+  .jbadge{width:48px;height:48px;border-radius:12px;background:var(--card);border:1.5px solid var(--line);
     display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--ink-soft);
-    box-shadow:0 10px 20px -14px rgba(29,26,21,.4);transition:transform .25s,border-color .25s;}
+    box-shadow:0 10px 20px -14px rgba(0,0,0,.5);transition:transform .25s,border-color .25s;}
   .journey-node:hover .jbadge{transform:translateY(-3px);border-color:var(--rust);}
   .journey-node.current .jbadge{width:64px;height:64px;font-size:13px;border-color:var(--rust);color:var(--ink);
-    box-shadow:0 0 0 5px rgba(var(--rust-rgb),.14),0 14px 24px -14px rgba(29,26,21,.45);}
+    box-shadow:0 0 0 5px rgba(var(--rust-rgb),.14),0 14px 24px -14px rgba(0,0,0,.5);}
   .journey-node .jrole{font-size:12px;color:var(--ink-soft);line-height:1.35;}
-  .clock{position:relative;width:44px;height:44px;border-radius:50%;background:#fff;border:1.5px solid var(--line);}
+  .clock{position:relative;width:44px;height:44px;border-radius:50%;background:var(--card);border:1.5px solid var(--line);}
   .clock.pulse{animation:jpulse 2.6s ease-out infinite;}
   .clock .hr,.clock .mn{position:absolute;left:50%;top:50%;background:var(--ink-soft);border-radius:2px;transform-origin:50% 100%;}
   .clock .hr{width:2px;height:11px;margin:-11px 0 0 -1px;transform:rotate(35deg);}
@@ -193,10 +225,10 @@
   }
 
   /* ---------- EXPERIENCE ---------- */
-  .xp{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;
+  .xp{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;
     padding:32px 34px;margin-bottom:22px;transition:transform .25s,box-shadow .25s,border-color .25s;}
   .xp:last-child{margin-bottom:0;}
-  .xp:hover{transform:translateY(-3px);box-shadow:0 26px 54px -34px rgba(29,26,21,.32);border-color:var(--rust);}
+  .xp:hover{transform:translateY(-3px);box-shadow:0 26px 54px -34px rgba(0,0,0,.4);border-color:var(--rust);}
   .xp-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .xp .role{font-weight:700;font-size:1.28rem;}
   .xp .org{margin-top:4px;font-size:14.5px;color:var(--rust);font-weight:500;}
@@ -220,7 +252,7 @@
     background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(var(--rust-rgb),.07), transparent 70%);
     transition:opacity .25s;}
   .work-item:hover::before{opacity:1;}
-  .work-item:hover{background:rgba(0,0,0,.012);}
+  .work-item:hover{background:var(--hover-tint);}
   .work-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;position:relative;}
   .work-head h3{font-size:1.32rem;font-weight:700;}
   .work-status{font-family:Consolas,"Courier New",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
@@ -242,15 +274,15 @@
 
   /* ---------- SKILLS ---------- */
   .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-  .skill-col{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px 26px;
+  .skill-col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 26px;
     transition:transform .25s,box-shadow .25s,border-color .25s;}
-  .skill-col:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(29,26,21,.3);border-color:var(--rust);}
+  .skill-col:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(0,0,0,.4);border-color:var(--rust);}
   .skill-col h3{font-family:Consolas,"Courier New",monospace;font-size:12px;font-weight:500;letter-spacing:.1em;
     text-transform:uppercase;color:var(--rust);margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line);}
   .skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
   .skill-tag{font-size:13px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);
     border-radius:999px;padding:6px 13px;transition:border-color .2s,color .2s,background .2s,transform .2s;}
-  .skill-tag:hover{border-color:var(--rust);color:var(--ink);background:#fff;transform:translateY(-1px);}
+  .skill-tag:hover{border-color:var(--rust);color:var(--ink);background:var(--card);transform:translateY(-1px);}
 
   /* toolkit scroller */
   .toolkit{margin-top:52px;}
@@ -268,9 +300,9 @@
 
   /* ---------- CREDENTIALS ---------- */
   .cred-list{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-  .cred{display:flex;gap:16px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;
+  .cred{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;
     transition:transform .25s,box-shadow .25s,border-color .25s;}
-  .cred:hover{transform:translateY(-3px);box-shadow:0 18px 40px -28px rgba(29,26,21,.3);border-color:var(--rust);}
+  .cred:hover{transform:translateY(-3px);box-shadow:0 18px 40px -28px rgba(0,0,0,.4);border-color:var(--rust);}
   .cred-badge{width:42px;height:42px;border-radius:10px;background:var(--paper);border:1.5px solid var(--line);
     display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--ink-soft);flex:none;}
   .cred .issuer{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
@@ -284,11 +316,11 @@
 
   /* ---------- BACKGROUND (edu + vol) ---------- */
   .bg-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;}
-  .edu-card{display:flex;gap:16px;padding:18px;margin-bottom:12px;background:#fff;border:1px solid var(--line);
+  .edu-card{display:flex;gap:16px;padding:18px;margin-bottom:12px;background:var(--card);border:1px solid var(--line);
     border-radius:12px;transition:transform .25s,box-shadow .25s,border-color .25s;}
   .edu-card:last-child{margin-bottom:0;}
-  .edu-card:hover{transform:translateY(-2px);box-shadow:0 16px 34px -26px rgba(29,26,21,.3);border-color:var(--rust);}
-  .edu-card.current{border-color:var(--rust);background:linear-gradient(180deg,#fff,rgba(168,67,26,.04));}
+  .edu-card:hover{transform:translateY(-2px);box-shadow:0 16px 34px -26px rgba(0,0,0,.4);border-color:var(--rust);}
+  .edu-card.current{border-color:var(--rust);background:linear-gradient(180deg,var(--card),rgba(var(--rust-rgb),.06));}
   .edu-badge{width:44px;height:44px;border-radius:10px;background:var(--paper);border:1.5px solid var(--line);
     display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--ink-soft);flex:none;}
   .edu-card .when{font-family:Consolas,"Courier New",monospace;font-size:11px;color:var(--rust);letter-spacing:.04em;}
@@ -298,7 +330,7 @@
     text-transform:uppercase;color:var(--faint);margin:0 0 20px;}
   .bg-row{padding:18px 4px;border-bottom:1px solid var(--line);transition:padding-left .2s,background .2s;}
   .bg-row:first-of-type{padding-top:0;}
-  .bg-row:hover{padding-left:12px;background:rgba(0,0,0,.012);}
+  .bg-row:hover{padding-left:12px;background:var(--hover-tint);}
   .bg-col:last-child .bg-row:last-child{border-bottom:none;}
   .bg-row .when{font-family:Consolas,"Courier New",monospace;font-size:11.5px;color:var(--rust);}
   .bg-row h4{font-weight:700;font-size:1.02rem;margin-top:6px;}
@@ -312,7 +344,7 @@
   .beyond span.i:not(:last-child)::after{content:"·";margin-left:16px;color:var(--rule);}
 
   /* ---------- CONTACT ---------- */
-  .contact{background:var(--ink);color:var(--ink-invert);border-top:none;position:relative;overflow:hidden;}
+  .contact{background:#1D1A15;color:#F6F3EA;border-top:none;position:relative;overflow:hidden;}
   .contact-glow{position:absolute;inset:0;pointer-events:none;
     background:radial-gradient(520px circle at var(--mx) var(--my), rgba(224,164,129,.10), transparent 65%);}
   .contact .kicker .t{color:#8A8478;}
@@ -325,12 +357,12 @@
     border-bottom:1px solid #35322A;flex-wrap:wrap;}
   .c-row:last-child{border-bottom:none;}
   .c-row .k{font-family:Consolas,"Courier New",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#8A8478;}
-  .c-row a{font-size:1.3rem;font-weight:700;color:var(--ink-invert);text-decoration:none;
+  .c-row a{font-size:1.3rem;font-weight:700;color:#F6F3EA;text-decoration:none;
     border-bottom:1.5px solid transparent;transition:color .18s,border-color .18s;}
   .c-row a:hover{color:#E0A481;border-color:#E0A481;}
 
   footer{padding:26px clamp(24px,6vw,88px);font-family:Consolas,"Courier New",monospace;font-size:12px;color:#8A8478;
-    background:var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    background:#1D1A15;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 
   [data-reveal]{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1);}
   [data-reveal].in{opacity:1;transform:none;}
@@ -350,6 +382,28 @@
   .chart-dot{opacity:0;transition:opacity .4s ease .9s;}
   .hero-card.in .chart-dot{opacity:1;}
 
+  /* ---------- SEARCH ---------- */
+  .search-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(2px);z-index:400;
+    display:flex;align-items:flex-start;justify-content:center;padding:12vh 20px 20px;
+    opacity:0;pointer-events:none;transition:opacity .2s;}
+  .search-overlay.open{opacity:1;pointer-events:auto;}
+  .search-box{background:var(--card);border:1px solid var(--line);border-radius:14px;width:100%;max-width:560px;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.6);overflow:hidden;transform:translateY(-10px);transition:transform .2s;}
+  .search-overlay.open .search-box{transform:translateY(0);}
+  .search-input-row{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line);}
+  .search-input-row svg{width:18px;height:18px;color:var(--faint);flex:none;}
+  #searchInput{flex:1;border:none;outline:none;background:transparent;font-size:16px;color:var(--ink);font-family:inherit;min-width:0;}
+  #searchInput::placeholder{color:var(--faint);}
+  .search-esc{font-family:Consolas,"Courier New",monospace;font-size:11px;color:var(--faint);border:1px solid var(--line);
+    border-radius:4px;padding:3px 6px;flex:none;}
+  .search-results{max-height:50vh;overflow-y:auto;padding:8px;}
+  .search-result{display:block;padding:12px 14px;border-radius:8px;text-decoration:none;color:inherit;transition:background .15s;}
+  .search-result:hover{background:var(--paper);}
+  .search-result .sr-sec{font-family:Consolas,"Courier New",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--rust);}
+  .search-result .sr-title{font-weight:600;margin-top:3px;}
+  .search-result .sr-snip{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .search-empty{padding:24px;text-align:center;color:var(--faint);font-size:14px;}
+
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;}
     [data-reveal],[data-reveal-group]>*{opacity:1!important;transform:none!important;}
@@ -360,18 +414,6 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:960px){
-    .shell{grid-template-columns:1fr;}
-    .rail{position:sticky;top:0;height:auto;flex-direction:row;align-items:center;justify-content:space-between;
-      border-right:none;border-bottom:1px solid var(--line);padding:16px clamp(20px,5vw,40px);
-      background:var(--paper);z-index:80;}
-    .rail-nav,.rail-foot{display:none;}
-    .rail.open .rail-nav,.rail.open .rail-foot{display:block;}
-    .rail.open{flex-direction:column;align-items:stretch;height:100vh;overflow-y:auto;}
-    .rail.open .rail-nav{margin-top:36px;}
-    .rail.open .rail-foot{margin-top:36px;}
-    .rail-top{display:flex;align-items:center;justify-content:space-between;width:100%;}
-    .rail-toggle{display:block;background:none;border:1px solid var(--line);border-radius:3px;
-      font-family:Consolas,"Courier New",monospace;font-size:12px;padding:8px 12px;color:var(--ink);cursor:pointer;}
     .impact-row{flex-wrap:wrap;}
     .impact-item{flex:1 1 44%;border-bottom:1px solid var(--line);}
   }
@@ -386,465 +428,483 @@
 <div id="bar"></div>
 <a class="skip" href="#main">Skip to content</a>
 
-<div class="shell">
-  <header class="rail" id="rail">
-    <div>
-      <div class="rail-top">
-        <a href="#top" class="mark">Jay Raval<small>Transformation Analyst<br>&amp; Industrial Engineer</small></a>
-        <button class="rail-toggle" id="railToggle" aria-expanded="false" aria-controls="rail">Menu</button>
-      </div>
-      <nav class="rail-nav" aria-label="Section navigation">
-        <ol>
-          <li><a href="#top">Intro</a></li>
-          <li><a href="#impact">Impact</a></li>
-          <li><a href="#approach">Engagement model</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#work">Case studies</a></li>
-          <li><a href="#skills">Capabilities</a></li>
-          <li><a href="#background">Background</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ol>
-      </nav>
+<header class="topnav" id="topnav">
+  <div class="topnav-in">
+    <a href="#top" class="mark">Jay Raval</a>
+    <nav class="topnav-links" id="topnavLinks" aria-label="Section navigation">
+      <a href="#top">Intro</a>
+      <a href="#impact">Impact</a>
+      <a href="#approach">Engagement model</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Case studies</a>
+      <a href="#skills">Capabilities</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="topnav-actions">
+      <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="nav-icon-btn" id="themeBtn" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg class="ti-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.5 12H2M22 12h-2.5M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/></svg>
+        <svg class="ti-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="topnavLinks">Menu</button>
     </div>
-    <div class="rail-foot">
-      <div class="clock" id="clock">Halifax, NS</div>
-      <div class="icon-row">
-        <a class="icon-btn" href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="10.5" x2="8" y2="16.5"/><circle cx="8" cy="7" r="0.6" fill="currentColor" stroke="none"/>
-            <path d="M12 16.5v-3.5c0-1.4 1-2.3 2.2-2.3s2.1.9 2.1 2.3v3.5"/><line x1="12" y1="10.5" x2="12" y2="16.5"/>
-          </svg>
-        </a>
-        <a class="icon-btn" href="https://github.com/JaysShadow" target="_blank" rel="noopener" aria-label="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.87 10.93.58.1.79-.25.79-.56 0-.27-.01-1.17-.02-2.13-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.95.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .31.21.67.8.56A10.98 10.98 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/>
-          </svg>
-        </a>
-        <a class="icon-btn" href="mailto:jay.raval@dal.ca" aria-label="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,7 12,13 21,7"/>
-          </svg>
-        </a>
-      </div>
-      <div class="rail-socials">
-        <a href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF) ↗</a>
-        <a href="mailto:jay.raval@dal.ca">jay.raval@dal.ca</a>
-      </div>
+  </div>
+</header>
+
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Search this site">
+    <div class="search-input-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Search this site" autocomplete="off">
+      <span class="search-esc">Esc</span>
     </div>
-  </header>
-
-  <main id="main">
-
-    <!-- INTRO -->
-    <section class="block hero" id="top">
-      <div class="hero-glow" id="heroGlow"></div>
-      <div class="hero-grid">
-        <div class="measure">
-          <div class="kicker"><span class="n">00</span><span class="t">Halifax, Nova Scotia · Operations Consulting</span></div>
-          <div class="status-badge"><span class="status-dot pulse"></span>Open to transformation and consulting roles</div>
-          <h1>I turn manual operations into systems leadership can <em>actually trust</em>.</h1>
-          <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who advises operations leaders on where a process is quietly failing, then builds the platform that fixes it for good. Process design, change management and hands on delivery on the Microsoft stack, from one person.</p>
-          <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, running platform strategy end to end across three Atlantic Canada branches.</p>
-          <div class="hero-links">
-            <a class="tlink magnet" href="#contact" data-magnet>Get in touch</a>
-            <a class="tlink quiet magnet" href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener" data-magnet>Download résumé ↗</a>
-          </div>
-          <div class="fact-pills">
-            <span class="fact-pill">Lean Six Sigma Green Belt</span>
-            <span class="fact-pill">Based in Halifax, NS</span>
-            <span class="fact-pill">MBA in progress</span>
-          </div>
-        </div>
-
-        <div class="hero-card" data-reveal id="heroCard">
-          <div class="cap"><span>Operational reliability</span><span>12 month view</span></div>
-          <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg" aria-label="Chart showing operations trending from unstable to stable and improving after intervention">
-            <line x1="0" y1="150" x2="420" y2="150" stroke="#DED6C3" stroke-width="1"/>
-            <path class="chart-line" d="M0,120 L35,132 L70,104 L105,138 L140,112 L175,128 L200,118"
-              fill="none" stroke="#938C7E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path class="chart-line" d="M200,118 C 240,96 270,60 310,44 C 345,30 385,22 420,16"
-              fill="none" stroke="#A8431A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transition-delay:.3s"/>
-            <line x1="200" y1="10" x2="200" y2="150" stroke="#DED6C3" stroke-width="1" stroke-dasharray="3 5"/>
-            <circle class="chart-dot" cx="420" cy="16" r="5" fill="#A8431A"/>
-            <text x="204" y="28" font-family="Consolas, monospace" font-size="10" fill="#938C7E">platform live</text>
-          </svg>
-          <div class="legend">
-            <span><i class="dot" style="background:#938C7E"></i>Before</span>
-            <span><i class="dot" style="background:#A8431A"></i>After</span>
-          </div>
-          <div class="badges">
-            <div class="badge"><div class="bv">+18%</div><div class="bl">Material utilization lift</div></div>
-            <div class="badge"><div class="bv">+61%</div><div class="bl">Profit on optimized line</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- IMPACT -->
-    <section class="block" id="impact">
-      <div class="kicker"><span class="n">01</span><span class="t">A year of delivery</span></div>
-      <div class="measure">
-        <h2 style="font-size:1.5rem;font-weight:700;">What one analyst shipped, solo, in fourteen months</h2>
-      </div>
-      <div class="impact-row" data-reveal-group>
-        <div class="impact-item"><div class="v num" data-count="7">0</div><div class="l">Power Apps designed and built for shop floor use</div></div>
-        <div class="impact-item"><div class="v num" data-count="18">0</div><div class="l">Power Automate flows running in production</div></div>
-        <div class="impact-item"><div class="v num" data-count="6">0</div><div class="l">Power BI dashboards leadership checks daily</div></div>
-        <div class="impact-item"><div class="v num" data-count="3">0</div><div class="l">Branches on one shared operations platform</div></div>
-        <div class="impact-item"><div class="v num" data-count="1">0</div><div class="l">SharePoint environment, owned end to end</div></div>
-      </div>
-      <p class="impact-note">Plus the layer that makes any of it stick: SOPs, Visio process maps, project plans, and being the first call when something breaks.</p>
-    </section>
-
-    <!-- ENGAGEMENT MODEL -->
-    <section class="block" id="approach">
-      <div class="kicker"><span class="n">02</span><span class="t">Engagement model</span></div>
-      <div class="measure">
-        <p style="color:var(--ink-soft);font-size:15.5px;margin:0 0 8px;">The same four phases run through every engagement, whether the client is a branch manager or a hospital scheduling team.</p>
-      </div>
-      <div class="steps" id="steps">
-        <div class="prog" id="stepsProg"></div>
-        <div class="step" data-step><span class="sn">01</span><h3>Diagnose the current state</h3><p>Walk the floor, watch the actual workaround, and map the process as it truly runs before touching a single tool.</p></div>
-        <div class="step" data-step><span class="sn">02</span><h3>Design the target state</h3><p>Sketch what good looks like once the manual steps are gone, then test it against how people really work, not how the org chart says they work.</p></div>
-        <div class="step" data-step><span class="sn">03</span><h3>Deploy on a stack you can support</h3><p>Power Apps for the interface, Power Automate underneath, SharePoint as the backbone. Nothing exotic, everything a normal IT team can maintain.</p></div>
-        <div class="step" data-step><span class="sn">04</span><h3>Sustain the change</h3><p>SOPs, training, and staying the first call when something breaks, until the new way is simply the way things are done.</p></div>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section class="block" id="experience">
-      <div class="kicker"><span class="n">03</span><span class="t">Experience</span></div>
-
-      <div class="journey">
-        <div class="journey-head">
-          <h3>A journey through time</h3>
-          <div class="journey-meta">2021 TO PRESENT<br>CAREER TIMELINE</div>
-        </div>
-        <p class="journey-hint">Scroll to see the full timeline.</p>
-        <div class="journey-map" id="journeyMap">
-          <div class="journey-inner">
-            <svg class="journey-svg" viewBox="0 0 1000 230" preserveAspectRatio="none" aria-hidden="true">
-              <path class="journey-path" d="M40,150 C 130,110 180,190 260,165 C 340,140 380,55 470,70 C 570,86 590,205 680,175 C 770,145 820,55 900,75"/>
-            </svg>
-            <div class="journey-node" style="left:11%;top:65%">
-              <div class="jinner" data-reveal>
-                <span class="jy">2021</span>
-                <div class="jbadge">AAC</div>
-                <span class="jrole">Process Improvement Engineer</span>
-              </div>
-            </div>
-            <div class="journey-node" style="left:30%;top:72%">
-              <div class="jinner" data-reveal>
-                <span class="jy">2022</span>
-                <div class="jbadge">AAC</div>
-                <span class="jrole">Operations Manager and Client Advisor</span>
-              </div>
-            </div>
-            <div class="journey-node current" style="left:47%;top:30%">
-              <div class="jinner" data-reveal>
-                <span class="jy">2025</span>
-                <div class="jbadge">PMH</div>
-                <span class="jrole">Transformation Analyst</span>
-              </div>
-            </div>
-            <div class="journey-node" style="left:88%;top:33%">
-              <div class="jinner" data-reveal>
-                <span class="jy">Present</span>
-                <div class="clock pulse" aria-hidden="true"><i class="hr"></i><i class="mn"></i></div>
-                <span class="jrole">Ongoing engagement</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="xp" data-reveal>
-        <div class="xp-head">
-          <div>
-            <div class="role">Transformation Analyst</div>
-            <div class="org">Prime Material Handling · Halifax, NS</div>
-          </div>
-          <div class="xp-right">
-            <div class="xp-badge">PMH</div>
-            <div class="xp-when">JUN 2025<br>TO PRESENT</div>
-          </div>
-        </div>
-        <div class="xp-tags">
-          <span class="skill-tag">Power Apps</span><span class="skill-tag">Power Automate</span>
-          <span class="skill-tag">SharePoint</span><span class="skill-tag">Visio</span><span class="skill-tag">Change management</span>
-        </div>
-        <ul>
-          <li>Own the branch operations platform end to end: <b>7 Power Apps, 18 flows, 6 dashboards</b> on a SharePoint backbone serving 3 branches.</li>
-          <li>Sole developer, admin and first responder, covering access governance, licensing, and technician onboarding from day one.</li>
-          <li>Drive adoption through SOP packs, Visio process maps and change management across every tool.</li>
-        </ul>
-      </div>
-
-      <div class="xp" data-reveal>
-        <div class="xp-head">
-          <div>
-            <div class="role">Operations Manager &amp; Client Advisor (S&amp;OP)</div>
-            <div class="org">Aangi Advanced Composites · Ahmedabad</div>
-          </div>
-          <div class="xp-right">
-            <div class="xp-badge">AAC</div>
-            <div class="xp-when">2022<br>TO 2023</div>
-          </div>
-        </div>
-        <div class="xp-tags">
-          <span class="skill-tag">Power BI</span><span class="skill-tag">Excel</span>
-          <span class="skill-tag">SAP</span><span class="skill-tag">MRP</span><span class="skill-tag">S&amp;OP</span>
-        </div>
-        <ul>
-          <li>Built Power BI and Excel KPI tooling that lifted raw material utilization <b>+18%</b> and automation rate <b>+12%</b>.</li>
-          <li>Ran freight and TCO analysis inside SAP supported workflows to improve delivery reliability and cut logistics spend.</li>
-          <li>Aligned procurement with demand using MRP and replenishment logic, avoiding both stockouts and excess holding.</li>
-        </ul>
-      </div>
-
-      <div class="xp" data-reveal>
-        <div class="xp-head">
-          <div>
-            <div class="role">Process Improvement Engineer</div>
-            <div class="org">Aangi Advanced Composites · Ahmedabad</div>
-          </div>
-          <div class="xp-right">
-            <div class="xp-badge">AAC</div>
-            <div class="xp-when">2021<br>TO 2022</div>
-          </div>
-        </div>
-        <div class="xp-tags">
-          <span class="skill-tag">Root cause analysis</span><span class="skill-tag">ABC/XYZ classification</span>
-          <span class="skill-tag">Lead time analysis</span>
-        </div>
-        <ul>
-          <li>Led root cause and gap analysis to clear recurring supply chain bottlenecks.</li>
-          <li>Applied ABC/XYZ classification and lead time analysis to right size inventory and safety stock.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- CASE STUDIES -->
-    <section class="block" id="work">
-      <div class="kicker"><span class="n">04</span><span class="t">Case studies</span></div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>Part Request System</h3><span class="work-status live">Live</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">Parts requests ran on phone calls and memory, with no shop floor visibility into status.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Mapped the current state in Visio, designed the future state, then built canvas apps backed by 18 automated flows for notifications, timestamps and sync.</span></div>
-        </div>
-        <div class="work-tags"><span>Power Apps</span><span>Power Automate</span><span>Visio</span><span>3 branches</span></div>
-      </div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>Dispatch System</h3><span class="work-status">Built</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">Field service dispatch needed customer, machine and job history in one place, faster than the low code toolkit could deliver.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Mapped, designed and built the workflow on a modern code centric stack instead, covering customer list, machine history and dispatch log.</span></div>
-        </div>
-        <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>GitHub</span></div>
-      </div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>PSSR Sales Pipeline &amp; Dashboard</h3><span class="work-status live">Live</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">Leadership had no live view of the sales funnel, including Dock &amp; Door, without someone manually compiling it.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Rebuilt the sales funnel list from the ground up and designed a Power BI dashboard refreshing daily with zero manual updates.</span></div>
-        </div>
-        <div class="work-tags"><span>Power BI</span><span>Daily auto refresh</span></div>
-      </div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>SOP Library &amp; Process Documentation</h3><span class="work-status live">Live</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">New tools were shipping faster than anyone could document how to use them.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Authored and maintain the full SOP pack and Visio current and future state maps, the change management layer that actually drives adoption.</span></div>
-        </div>
-        <div class="work-tags"><span>SOPs</span><span>Visio</span><span>Change management</span></div>
-      </div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>ERP System: AI Assisted Build</h3><span class="work-status">In progress</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">The current Microsoft environment needs a system of record that scales past the next round of growth.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Architecting a custom ERP on Lovable, GitHub and Supabase, pairing AI assisted development with the existing Microsoft environment.</span></div>
-        </div>
-        <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>AI assisted dev</span></div>
-      </div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>Paper Boat Production Optimization</h3><span class="work-status">DMAIC</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">A hands on production line was losing margin to waste and an unbalanced layout.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Ran a DMAIC project using 5S, PDCA, Poka Yoke and Value Stream Mapping to eliminate waste and rebalance the line.</span></div>
-        </div>
-        <div class="work-metric">Result: quality <b>77% → 90%</b> · total profit <b>+61%</b></div>
-      </div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>Appointment Scheduling Optimization</h3><span class="work-status">Nova Scotia Health</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">A public healthcare system was losing capacity to appointment no shows.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Paired data driven insight with people centered change management to target the highest risk scheduling gaps.</span></div>
-        </div>
-        <div class="work-metric">Result: no show rate addressed <b>up to 30%</b></div>
-      </div>
-
-      <div class="work-item" data-reveal>
-        <div class="work-head"><h3>Selective Maintenance Planning</h3><span class="work-status">Reliability</span></div>
-        <div class="work-fields">
-          <div class="wf"><span class="fk">Challenge</span><span class="fv">Maintenance budget and crew time were fixed, but equipment readiness targets were not being met.</span></div>
-          <div class="wf"><span class="fk">What I did</span><span class="fv">Built a data driven reliability model, Weibull analysis with k out of n logic, plus Python and Excel optimization to maximize readiness.</span></div>
-        </div>
-        <div class="work-tags"><span>Python</span><span>Weibull</span><span>Optimization</span></div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="block" id="skills">
-      <div class="kicker"><span class="n">05</span><span class="t">Capabilities</span></div>
-      <div class="skill-cols" data-reveal-group>
-        <div class="skill-col">
-          <h3>Transformation &amp; improvement</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Lean Six Sigma (Green Belt)</span><span class="skill-tag">DMAIC</span>
-            <span class="skill-tag">Root cause analysis</span><span class="skill-tag">Value stream mapping</span>
-            <span class="skill-tag">Process mapping (Visio)</span><span class="skill-tag">Change management</span>
-            <span class="skill-tag">S&amp;OP</span><span class="skill-tag">Continuous improvement</span>
-          </div>
-        </div>
-        <div class="skill-col">
-          <h3>Data &amp; BI</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Power BI</span><span class="skill-tag">Tableau</span><span class="skill-tag">Cognos</span>
-            <span class="skill-tag">SQL</span><span class="skill-tag">Python</span><span class="skill-tag">R</span>
-            <span class="skill-tag">Excel (Power Query, VBA, Solver)</span><span class="skill-tag">KPI reporting</span>
-            <span class="skill-tag">Predictive analytics</span><span class="skill-tag">Demand forecasting</span>
-          </div>
-        </div>
-        <div class="skill-col">
-          <h3>Platforms &amp; build</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Power Apps</span><span class="skill-tag">Power Automate</span>
-            <span class="skill-tag">SharePoint</span><span class="skill-tag">Lovable</span><span class="skill-tag">Supabase</span>
-            <span class="skill-tag">GitHub</span><span class="skill-tag">SAP ERP (MM/TM/ECC)</span><span class="skill-tag">NetSuite</span>
-            <span class="skill-tag">MS Project</span><span class="skill-tag">Primavera P6</span><span class="skill-tag">Agile</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="toolkit">
-        <div class="kicker"><span class="n">05a</span><span class="t">Toolkit</span></div>
-        <p class="toolkit-hint">Scroll for the full stack.</p>
-        <div class="toolkit-scroll" id="toolkitScroll">
-          <div class="tk-item">Power BI</div>
-          <div class="tk-item">Power Apps</div>
-          <div class="tk-item">Power Automate</div>
-          <div class="tk-item">SharePoint</div>
-          <div class="tk-item">SQL</div>
-          <div class="tk-item">Python</div>
-          <div class="tk-item">Tableau</div>
-          <div class="tk-item">Excel</div>
-          <div class="tk-item">SAP ERP</div>
-          <div class="tk-item">NetSuite</div>
-          <div class="tk-item">Visio</div>
-          <div class="tk-item">Lovable</div>
-          <div class="tk-item">Supabase</div>
-          <div class="tk-item">GitHub</div>
-          <div class="tk-item">MS Project</div>
-        </div>
-      </div>
-
-      <div class="kicker" style="margin-top:56px;"><span class="n">05b</span><span class="t">Credentials</span></div>
-      <div class="cred-list" data-reveal-group>
-        <div class="cred">
-          <div class="cred-badge">LSS</div>
-          <div><div class="issuer">Council for Six Sigma Certification</div><div class="name">Lean Six Sigma Green Belt</div>
-            <p class="desc">DMAIC based process improvement: root cause analysis, statistical thinking and waste reduction.</p></div>
-        </div>
-        <div class="cred">
-          <div class="cred-badge">ISO</div>
-          <div><div class="issuer">ISO 9001:2015</div><div class="name">Lead Auditor</div>
-            <p class="desc">Qualified to lead audits of quality management systems against the ISO 9001:2015 standard.</p></div>
-        </div>
-        <div class="cred">
-          <div class="cred-badge">PBI</div>
-          <div><div class="issuer">Microsoft</div><div class="name">Power BI for Data Analysts</div>
-            <p class="desc">Building data models, reports and dashboards in Power BI.</p></div>
-        </div>
-        <div class="cred">
-          <div class="cred-badge">QM</div>
-          <div><div class="issuer">Quality Management</div><div class="name">Quality Management Foundations</div>
-            <p class="desc">Core principles of quality management systems and continuous improvement.</p></div>
-        </div>
-        <div class="cred">
-          <div class="cred-badge">SQL</div>
-          <div><div class="issuer">Database</div><div class="name">MySQL Essential Training</div>
-            <p class="desc">Relational database fundamentals and writing SQL queries in MySQL.</p></div>
-        </div>
-        <div class="cred">
-          <div class="cred-badge">CAD</div>
-          <div><div class="issuer">Autodesk</div><div class="name">AutoCAD &amp; Fusion 360</div>
-            <p class="desc">2D drafting and 3D parametric modeling across AutoCAD and Fusion 360.</p></div>
-        </div>
-        <div class="cred pending">
-          <div class="cred-badge">PMP</div>
-          <div><div class="issuer">Project Management Institute · in progress</div><div class="name">PMP</div>
-            <p class="desc">PMI's globally recognized certification in project leadership and delivery.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BACKGROUND -->
-    <section class="block" id="background">
-      <div class="kicker"><span class="n">06</span><span class="t">Background</span></div>
-      <div class="bg-grid">
-        <div class="bg-col" data-reveal-group>
-          <h3>Education</h3>
-          <div class="edu-card">
-            <div class="edu-badge">DAL</div>
-            <div><div class="when">2023 TO 2025</div><h4>Master of Engineering, Industrial Engineering</h4><p>Dalhousie University · Halifax, NS</p></div>
-          </div>
-          <div class="edu-card current">
-            <div class="edu-badge">NM</div>
-            <div><div class="when">2025 TO 2027 · IN PROGRESS</div><h4>MBA, Business Management</h4><p>NMIMS (Narsee Monjee Institute of Management Studies)</p></div>
-          </div>
-          <div class="edu-card">
-            <div class="edu-badge">GTU</div>
-            <div><div class="when">2017 TO 2021</div><h4>Bachelor of Engineering, Mechanical Engineering</h4><p>Gujarat Technological University · ranked 151 of 31,163</p></div>
-          </div>
-        </div>
-        <div class="bg-col" data-reveal-group>
-          <h3>Community</h3>
-          <div class="bg-row"><div class="when">2026</div><h4>Event Volunteer, SailGP Canada</h4><p>Supported event operations at the Canada Sail Grand Prix in Halifax.</p></div>
-          <div class="bg-row"><div class="when">Aug 2024 TO Jul 2025</div><h4>Volunteer of Administration, PMI Nova Scotia</h4><p>Managed chapter communications and documentation; supported event logistics and member engagement.</p></div>
-          <div class="bg-row"><div class="when">2024</div><h4>Volunteer, Designing Productivity Conference</h4><p>Dalhousie University · event coordination, speaker management and networking facilitation.</p></div>
-        </div>
-      </div>
-      <div class="beyond" data-reveal-group><span class="l">Off the clock</span><span class="i">Hiking</span><span class="i">Swimming</span><span class="i">Chess</span><span class="i">Squash</span></div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="block contact" id="contact">
-      <div class="contact-glow" id="contactGlow"></div>
-      <div class="kicker"><span class="n">07</span><span class="t">Get in touch</span></div>
-      <h2>Open to transformation, process improvement and operations consulting roles.</h2>
-      <p class="sub">If you're trying to figure out why a good process keeps breaking, or you have a mess of spreadsheets that wants to be a system, I'd like to hear about it.</p>
-      <div class="contact-list" data-reveal-group>
-        <div class="c-row"><span class="k">Email</span><a class="magnet" href="mailto:jay.raval@dal.ca" data-magnet>jay.raval@dal.ca</a></div>
-        <div class="c-row"><span class="k">Phone</span><a class="magnet" href="tel:+17828822694" data-magnet>+1 782 882 2694</a></div>
-        <div class="c-row"><span class="k">LinkedIn</span><a class="magnet" href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener" data-magnet>linkedin.com/in/jayr28</a></div>
-        <div class="c-row"><span class="k">GitHub</span><a class="magnet" href="https://github.com/JaysShadow" target="_blank" rel="noopener" data-magnet>github.com/JaysShadow</a></div>
-      </div>
-    </section>
-
-    <footer>
-      <span>© 2026 Jay Raval</span>
-      <span>Halifax, Nova Scotia</span>
-    </footer>
-  </main>
+    <div class="search-results" id="searchResults"></div>
+  </div>
 </div>
+
+<main id="main">
+
+  <!-- INTRO -->
+  <section class="block hero" id="top">
+    <div class="hero-glow" id="heroGlow"></div>
+    <div class="hero-grid">
+      <div class="measure">
+        <div class="kicker"><span class="n">00</span><span class="t">Halifax, Nova Scotia · Operations Consulting</span></div>
+        <div class="status-badge"><span class="status-dot pulse"></span>Open to transformation and consulting roles</div>
+        <h1>I turn manual operations into systems leadership can <em>actually trust</em>.</h1>
+        <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who advises operations leaders on where a process is quietly failing, then builds the platform that fixes it for good. Process design, change management and hands on delivery on the Microsoft stack, from one person.</p>
+        <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, running platform strategy end to end across three Atlantic Canada branches.</p>
+        <div class="btn-row">
+          <a class="btn solid magnet" href="#contact" data-magnet>Get in touch</a>
+          <a class="btn outline magnet" href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener" data-magnet>Download résumé ↗</a>
+        </div>
+        <div class="fact-pills">
+          <span class="fact-pill">Lean Six Sigma Green Belt</span>
+          <span class="fact-pill">Based in Halifax, NS</span>
+          <span class="fact-pill">MBA in progress</span>
+        </div>
+        <div class="follow-row">
+          <span class="follow-label">Follow</span>
+          <div class="icon-row">
+            <a class="icon-btn" href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="10.5" x2="8" y2="16.5"/><circle cx="8" cy="7" r="0.6" fill="currentColor" stroke="none"/>
+                <path d="M12 16.5v-3.5c0-1.4 1-2.3 2.2-2.3s2.1.9 2.1 2.3v3.5"/><line x1="12" y1="10.5" x2="12" y2="16.5"/>
+              </svg>
+            </a>
+            <a class="icon-btn" href="https://github.com/JaysShadow" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.87 10.93.58.1.79-.25.79-.56 0-.27-.01-1.17-.02-2.13-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.95.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .31.21.67.8.56A10.98 10.98 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/>
+              </svg>
+            </a>
+            <a class="icon-btn" href="mailto:jay.raval@dal.ca" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,7 12,13 21,7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card" data-reveal id="heroCard">
+        <div class="cap"><span>Operational reliability</span><span>12 month view</span></div>
+        <svg viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg" aria-label="Chart showing operations trending from unstable to stable and improving after intervention">
+          <line x1="0" y1="150" x2="420" y2="150" stroke="#DED6C3" stroke-width="1"/>
+          <path class="chart-line" d="M0,120 L35,132 L70,104 L105,138 L140,112 L175,128 L200,118"
+            fill="none" stroke="#938C7E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="chart-line" d="M200,118 C 240,96 270,60 310,44 C 345,30 385,22 420,16"
+            fill="none" stroke="#A8431A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transition-delay:.3s"/>
+          <line x1="200" y1="10" x2="200" y2="150" stroke="#DED6C3" stroke-width="1" stroke-dasharray="3 5"/>
+          <circle class="chart-dot" cx="420" cy="16" r="5" fill="#A8431A"/>
+          <text x="204" y="28" font-family="Consolas, monospace" font-size="10" fill="#938C7E">platform live</text>
+        </svg>
+        <div class="legend">
+          <span><i class="dot" style="background:#938C7E"></i>Before</span>
+          <span><i class="dot" style="background:#A8431A"></i>After</span>
+        </div>
+        <div class="badges">
+          <div class="badge"><div class="bv">+18%</div><div class="bl">Material utilization lift</div></div>
+          <div class="badge"><div class="bv">+61%</div><div class="bl">Profit on optimized line</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section class="block" id="impact">
+    <div class="kicker"><span class="n">01</span><span class="t">A year of delivery</span></div>
+    <div class="measure">
+      <h2 style="font-size:1.5rem;font-weight:700;">What one analyst shipped, solo, in fourteen months</h2>
+    </div>
+    <div class="impact-row" data-reveal-group>
+      <div class="impact-item"><div class="v num" data-count="7">0</div><div class="l">Power Apps designed and built for shop floor use</div></div>
+      <div class="impact-item"><div class="v num" data-count="18">0</div><div class="l">Power Automate flows running in production</div></div>
+      <div class="impact-item"><div class="v num" data-count="6">0</div><div class="l">Power BI dashboards leadership checks daily</div></div>
+      <div class="impact-item"><div class="v num" data-count="3">0</div><div class="l">Branches on one shared operations platform</div></div>
+      <div class="impact-item"><div class="v num" data-count="1">0</div><div class="l">SharePoint environment, owned end to end</div></div>
+    </div>
+    <p class="impact-note">Plus the layer that makes any of it stick: SOPs, Visio process maps, project plans, and being the first call when something breaks.</p>
+    <div class="focus-card" data-reveal>
+      <div class="focus-label">Current focus</div>
+      <ul>
+        <li>Architecting the next generation ERP with AI assisted development</li>
+        <li>Completing an MBA in Business Management</li>
+        <li>Working toward the PMP certification</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENT MODEL -->
+  <section class="block" id="approach">
+    <div class="kicker"><span class="n">02</span><span class="t">Engagement model</span></div>
+    <div class="measure">
+      <p style="color:var(--ink-soft);font-size:15.5px;margin:0 0 8px;">The same four phases run through every engagement, whether the client is a branch manager or a hospital scheduling team.</p>
+    </div>
+    <div class="steps" id="steps">
+      <div class="prog" id="stepsProg"></div>
+      <div class="step" data-step><span class="sn">01</span><h3>Diagnose the current state</h3><p>Walk the floor, watch the actual workaround, and map the process as it truly runs before touching a single tool.</p></div>
+      <div class="step" data-step><span class="sn">02</span><h3>Design the target state</h3><p>Sketch what good looks like once the manual steps are gone, then test it against how people really work, not how the org chart says they work.</p></div>
+      <div class="step" data-step><span class="sn">03</span><h3>Deploy on a stack you can support</h3><p>Power Apps for the interface, Power Automate underneath, SharePoint as the backbone. Nothing exotic, everything a normal IT team can maintain.</p></div>
+      <div class="step" data-step><span class="sn">04</span><h3>Sustain the change</h3><p>SOPs, training, and staying the first call when something breaks, until the new way is simply the way things are done.</p></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="block" id="experience">
+    <div class="kicker"><span class="n">03</span><span class="t">Experience</span></div>
+
+    <div class="journey">
+      <div class="journey-head">
+        <h3>A journey through time</h3>
+        <div class="journey-meta">2021 TO PRESENT<br>CAREER TIMELINE</div>
+      </div>
+      <p class="journey-hint">Scroll to see the full timeline.</p>
+      <div class="journey-map" id="journeyMap">
+        <div class="journey-inner">
+          <svg class="journey-svg" viewBox="0 0 1000 230" preserveAspectRatio="none" aria-hidden="true">
+            <path class="journey-path" d="M40,150 C 130,110 180,190 260,165 C 340,140 380,55 470,70 C 570,86 590,205 680,175 C 770,145 820,55 900,75"/>
+          </svg>
+          <div class="journey-node" style="left:11%;top:65%">
+            <div class="jinner" data-reveal>
+              <span class="jy">2021</span>
+              <div class="jbadge">AAC</div>
+              <span class="jrole">Process Improvement Engineer</span>
+            </div>
+          </div>
+          <div class="journey-node" style="left:30%;top:72%">
+            <div class="jinner" data-reveal>
+              <span class="jy">2022</span>
+              <div class="jbadge">AAC</div>
+              <span class="jrole">Operations Manager and Client Advisor</span>
+            </div>
+          </div>
+          <div class="journey-node current" style="left:47%;top:30%">
+            <div class="jinner" data-reveal>
+              <span class="jy">2025</span>
+              <div class="jbadge">PMH</div>
+              <span class="jrole">Transformation Analyst</span>
+            </div>
+          </div>
+          <div class="journey-node" style="left:88%;top:33%">
+            <div class="jinner" data-reveal>
+              <span class="jy">Present</span>
+              <div class="clock pulse" aria-hidden="true"><i class="hr"></i><i class="mn"></i></div>
+              <span class="jrole">Ongoing engagement</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp" data-reveal>
+      <div class="xp-head">
+        <div>
+          <div class="role">Transformation Analyst</div>
+          <div class="org">Prime Material Handling · Halifax, NS</div>
+        </div>
+        <div class="xp-right">
+          <div class="xp-badge">PMH</div>
+          <div class="xp-when">JUN 2025<br>TO PRESENT</div>
+        </div>
+      </div>
+      <div class="xp-tags">
+        <span class="skill-tag">Power Apps</span><span class="skill-tag">Power Automate</span>
+        <span class="skill-tag">SharePoint</span><span class="skill-tag">Visio</span><span class="skill-tag">Change management</span>
+      </div>
+      <ul>
+        <li>Own the branch operations platform end to end: <b>7 Power Apps, 18 flows, 6 dashboards</b> on a SharePoint backbone serving 3 branches.</li>
+        <li>Sole developer, admin and first responder, covering access governance, licensing, and technician onboarding from day one.</li>
+        <li>Drive adoption through SOP packs, Visio process maps and change management across every tool.</li>
+      </ul>
+    </div>
+
+    <div class="xp" data-reveal>
+      <div class="xp-head">
+        <div>
+          <div class="role">Operations Manager &amp; Client Advisor (S&amp;OP)</div>
+          <div class="org">Aangi Advanced Composites · Ahmedabad</div>
+        </div>
+        <div class="xp-right">
+          <div class="xp-badge">AAC</div>
+          <div class="xp-when">2022<br>TO 2023</div>
+        </div>
+      </div>
+      <div class="xp-tags">
+        <span class="skill-tag">Power BI</span><span class="skill-tag">Excel</span>
+        <span class="skill-tag">SAP</span><span class="skill-tag">MRP</span><span class="skill-tag">S&amp;OP</span>
+      </div>
+      <ul>
+        <li>Built Power BI and Excel KPI tooling that lifted raw material utilization <b>+18%</b> and automation rate <b>+12%</b>.</li>
+        <li>Ran freight and TCO analysis inside SAP supported workflows to improve delivery reliability and cut logistics spend.</li>
+        <li>Aligned procurement with demand using MRP and replenishment logic, avoiding both stockouts and excess holding.</li>
+      </ul>
+    </div>
+
+    <div class="xp" data-reveal>
+      <div class="xp-head">
+        <div>
+          <div class="role">Process Improvement Engineer</div>
+          <div class="org">Aangi Advanced Composites · Ahmedabad</div>
+        </div>
+        <div class="xp-right">
+          <div class="xp-badge">AAC</div>
+          <div class="xp-when">2021<br>TO 2022</div>
+        </div>
+      </div>
+      <div class="xp-tags">
+        <span class="skill-tag">Root cause analysis</span><span class="skill-tag">ABC/XYZ classification</span>
+        <span class="skill-tag">Lead time analysis</span>
+      </div>
+      <ul>
+        <li>Led root cause and gap analysis to clear recurring supply chain bottlenecks.</li>
+        <li>Applied ABC/XYZ classification and lead time analysis to right size inventory and safety stock.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="block" id="work">
+    <div class="kicker"><span class="n">04</span><span class="t">Case studies</span></div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>Part Request System</h3><span class="work-status live">Live</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">Parts requests ran on phone calls and memory, with no shop floor visibility into status.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Mapped the current state in Visio, designed the future state, then built canvas apps backed by 18 automated flows for notifications, timestamps and sync.</span></div>
+      </div>
+      <div class="work-tags"><span>Power Apps</span><span>Power Automate</span><span>Visio</span><span>3 branches</span></div>
+    </div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>Dispatch System</h3><span class="work-status">Built</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">Field service dispatch needed customer, machine and job history in one place, faster than the low code toolkit could deliver.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Mapped, designed and built the workflow on a modern code centric stack instead, covering customer list, machine history and dispatch log.</span></div>
+      </div>
+      <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>GitHub</span></div>
+    </div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>PSSR Sales Pipeline &amp; Dashboard</h3><span class="work-status live">Live</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">Leadership had no live view of the sales funnel, including Dock &amp; Door, without someone manually compiling it.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Rebuilt the sales funnel list from the ground up and designed a Power BI dashboard refreshing daily with zero manual updates.</span></div>
+      </div>
+      <div class="work-tags"><span>Power BI</span><span>Daily auto refresh</span></div>
+    </div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>SOP Library &amp; Process Documentation</h3><span class="work-status live">Live</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">New tools were shipping faster than anyone could document how to use them.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Authored and maintain the full SOP pack and Visio current and future state maps, the change management layer that actually drives adoption.</span></div>
+      </div>
+      <div class="work-tags"><span>SOPs</span><span>Visio</span><span>Change management</span></div>
+    </div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>ERP System: AI Assisted Build</h3><span class="work-status">In progress</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">The current Microsoft environment needs a system of record that scales past the next round of growth.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Architecting a custom ERP on Lovable, GitHub and Supabase, pairing AI assisted development with the existing Microsoft environment.</span></div>
+      </div>
+      <div class="work-tags"><span>Lovable</span><span>Supabase</span><span>AI assisted dev</span></div>
+    </div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>Paper Boat Production Optimization</h3><span class="work-status">DMAIC</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">A hands on production line was losing margin to waste and an unbalanced layout.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Ran a DMAIC project using 5S, PDCA, Poka Yoke and Value Stream Mapping to eliminate waste and rebalance the line.</span></div>
+      </div>
+      <div class="work-metric">Result: quality <b>77% → 90%</b> · total profit <b>+61%</b></div>
+    </div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>Appointment Scheduling Optimization</h3><span class="work-status">Nova Scotia Health</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">A public healthcare system was losing capacity to appointment no shows.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Paired data driven insight with people centered change management to target the highest risk scheduling gaps.</span></div>
+      </div>
+      <div class="work-metric">Result: no show rate addressed <b>up to 30%</b></div>
+    </div>
+
+    <div class="work-item" data-reveal>
+      <div class="work-head"><h3>Selective Maintenance Planning</h3><span class="work-status">Reliability</span></div>
+      <div class="work-fields">
+        <div class="wf"><span class="fk">Challenge</span><span class="fv">Maintenance budget and crew time were fixed, but equipment readiness targets were not being met.</span></div>
+        <div class="wf"><span class="fk">What I did</span><span class="fv">Built a data driven reliability model, Weibull analysis with k out of n logic, plus Python and Excel optimization to maximize readiness.</span></div>
+      </div>
+      <div class="work-tags"><span>Python</span><span>Weibull</span><span>Optimization</span></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="block" id="skills">
+    <div class="kicker"><span class="n">05</span><span class="t">Capabilities</span></div>
+    <div class="skill-cols" data-reveal-group>
+      <div class="skill-col">
+        <h3>Transformation &amp; improvement</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Lean Six Sigma (Green Belt)</span><span class="skill-tag">DMAIC</span>
+          <span class="skill-tag">Root cause analysis</span><span class="skill-tag">Value stream mapping</span>
+          <span class="skill-tag">Process mapping (Visio)</span><span class="skill-tag">Change management</span>
+          <span class="skill-tag">S&amp;OP</span><span class="skill-tag">Continuous improvement</span>
+        </div>
+      </div>
+      <div class="skill-col">
+        <h3>Data &amp; BI</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Power BI</span><span class="skill-tag">Tableau</span><span class="skill-tag">Cognos</span>
+          <span class="skill-tag">SQL</span><span class="skill-tag">Python</span><span class="skill-tag">R</span>
+          <span class="skill-tag">Excel (Power Query, VBA, Solver)</span><span class="skill-tag">KPI reporting</span>
+          <span class="skill-tag">Predictive analytics</span><span class="skill-tag">Demand forecasting</span>
+        </div>
+      </div>
+      <div class="skill-col">
+        <h3>Platforms &amp; build</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Power Apps</span><span class="skill-tag">Power Automate</span>
+          <span class="skill-tag">SharePoint</span><span class="skill-tag">Lovable</span><span class="skill-tag">Supabase</span>
+          <span class="skill-tag">GitHub</span><span class="skill-tag">SAP ERP (MM/TM/ECC)</span><span class="skill-tag">NetSuite</span>
+          <span class="skill-tag">MS Project</span><span class="skill-tag">Primavera P6</span><span class="skill-tag">Agile</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolkit">
+      <div class="kicker"><span class="n">05a</span><span class="t">Toolkit</span></div>
+      <p class="toolkit-hint">Scroll for the full stack.</p>
+      <div class="toolkit-scroll" id="toolkitScroll">
+        <div class="tk-item">Power BI</div>
+        <div class="tk-item">Power Apps</div>
+        <div class="tk-item">Power Automate</div>
+        <div class="tk-item">SharePoint</div>
+        <div class="tk-item">SQL</div>
+        <div class="tk-item">Python</div>
+        <div class="tk-item">Tableau</div>
+        <div class="tk-item">Excel</div>
+        <div class="tk-item">SAP ERP</div>
+        <div class="tk-item">NetSuite</div>
+        <div class="tk-item">Visio</div>
+        <div class="tk-item">Lovable</div>
+        <div class="tk-item">Supabase</div>
+        <div class="tk-item">GitHub</div>
+        <div class="tk-item">MS Project</div>
+      </div>
+    </div>
+
+    <div class="kicker" style="margin-top:56px;"><span class="n">05b</span><span class="t">Credentials</span></div>
+    <div class="cred-list" data-reveal-group>
+      <div class="cred">
+        <div class="cred-badge">LSS</div>
+        <div><div class="issuer">Council for Six Sigma Certification</div><div class="name">Lean Six Sigma Green Belt</div>
+          <p class="desc">DMAIC based process improvement: root cause analysis, statistical thinking and waste reduction.</p></div>
+      </div>
+      <div class="cred">
+        <div class="cred-badge">ISO</div>
+        <div><div class="issuer">ISO 9001:2015</div><div class="name">Lead Auditor</div>
+          <p class="desc">Qualified to lead audits of quality management systems against the ISO 9001:2015 standard.</p></div>
+      </div>
+      <div class="cred">
+        <div class="cred-badge">PBI</div>
+        <div><div class="issuer">Microsoft</div><div class="name">Power BI for Data Analysts</div>
+          <p class="desc">Building data models, reports and dashboards in Power BI.</p></div>
+      </div>
+      <div class="cred">
+        <div class="cred-badge">QM</div>
+        <div><div class="issuer">Quality Management</div><div class="name">Quality Management Foundations</div>
+          <p class="desc">Core principles of quality management systems and continuous improvement.</p></div>
+      </div>
+      <div class="cred">
+        <div class="cred-badge">SQL</div>
+        <div><div class="issuer">Database</div><div class="name">MySQL Essential Training</div>
+          <p class="desc">Relational database fundamentals and writing SQL queries in MySQL.</p></div>
+      </div>
+      <div class="cred">
+        <div class="cred-badge">CAD</div>
+        <div><div class="issuer">Autodesk</div><div class="name">AutoCAD &amp; Fusion 360</div>
+          <p class="desc">2D drafting and 3D parametric modeling across AutoCAD and Fusion 360.</p></div>
+      </div>
+      <div class="cred pending">
+        <div class="cred-badge">PMP</div>
+        <div><div class="issuer">Project Management Institute · in progress</div><div class="name">PMP</div>
+          <p class="desc">PMI's globally recognized certification in project leadership and delivery.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKGROUND -->
+  <section class="block" id="background">
+    <div class="kicker"><span class="n">06</span><span class="t">Background</span></div>
+    <div class="bg-grid">
+      <div class="bg-col" data-reveal-group>
+        <h3>Education</h3>
+        <div class="edu-card">
+          <div class="edu-badge">DAL</div>
+          <div><div class="when">2023 TO 2025</div><h4>Master of Engineering, Industrial Engineering</h4><p>Dalhousie University · Halifax, NS</p></div>
+        </div>
+        <div class="edu-card current">
+          <div class="edu-badge">NM</div>
+          <div><div class="when">2025 TO 2027 · IN PROGRESS</div><h4>MBA, Business Management</h4><p>NMIMS (Narsee Monjee Institute of Management Studies)</p></div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-badge">GTU</div>
+          <div><div class="when">2017 TO 2021</div><h4>Bachelor of Engineering, Mechanical Engineering</h4><p>Gujarat Technological University · ranked 151 of 31,163</p></div>
+        </div>
+      </div>
+      <div class="bg-col" data-reveal-group>
+        <h3>Community</h3>
+        <div class="bg-row"><div class="when">2026</div><h4>Event Volunteer, SailGP Canada</h4><p>Supported event operations at the Canada Sail Grand Prix in Halifax.</p></div>
+        <div class="bg-row"><div class="when">Aug 2024 TO Jul 2025</div><h4>Volunteer of Administration, PMI Nova Scotia</h4><p>Managed chapter communications and documentation; supported event logistics and member engagement.</p></div>
+        <div class="bg-row"><div class="when">2024</div><h4>Volunteer, Designing Productivity Conference</h4><p>Dalhousie University · event coordination, speaker management and networking facilitation.</p></div>
+      </div>
+    </div>
+    <div class="beyond" data-reveal-group><span class="l">Off the clock</span><span class="i">Hiking</span><span class="i">Swimming</span><span class="i">Chess</span><span class="i">Squash</span></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="block contact" id="contact">
+    <div class="contact-glow" id="contactGlow"></div>
+    <div class="kicker"><span class="n">07</span><span class="t">Get in touch</span></div>
+    <h2>Open to transformation, process improvement and operations consulting roles.</h2>
+    <p class="sub">If you're trying to figure out why a good process keeps breaking, or you have a mess of spreadsheets that wants to be a system, I'd like to hear about it.</p>
+    <div class="contact-list" data-reveal-group>
+      <div class="c-row"><span class="k">Email</span><a class="magnet" href="mailto:jay.raval@dal.ca" data-magnet>jay.raval@dal.ca</a></div>
+      <div class="c-row"><span class="k">Phone</span><a class="magnet" href="tel:+17828822694" data-magnet>+1 782 882 2694</a></div>
+      <div class="c-row"><span class="k">LinkedIn</span><a class="magnet" href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener" data-magnet>linkedin.com/in/jayr28</a></div>
+      <div class="c-row"><span class="k">GitHub</span><a class="magnet" href="https://github.com/JaysShadow" target="_blank" rel="noopener" data-magnet>github.com/JaysShadow</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Jay Raval</span>
+    <span id="clock">Halifax, Nova Scotia</span>
+  </footer>
+</main>
 
 <script>
 (function(){
@@ -859,26 +919,37 @@
   }
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
-  /* mobile rail toggle */
-  var rail=document.getElementById('rail'), toggle=document.getElementById('railToggle');
-  toggle.addEventListener('click', function(){
-    var open = rail.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    toggle.textContent = open ? 'Close' : 'Menu';
+  /* mobile nav toggle */
+  var navLinks=document.getElementById('topnavLinks'), navToggle=document.getElementById('navToggle');
+  navToggle.addEventListener('click', function(){
+    var open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.textContent = open ? 'Close' : 'Menu';
   });
-  document.querySelectorAll('.rail-nav a').forEach(function(a){
+  document.querySelectorAll('#topnavLinks a').forEach(function(a){
     a.addEventListener('click', function(){
-      if(rail.classList.contains('open')){ rail.classList.remove('open'); toggle.textContent='Menu'; toggle.setAttribute('aria-expanded','false'); }
+      if(navLinks.classList.contains('open')){ navLinks.classList.remove('open'); navToggle.textContent='Menu'; navToggle.setAttribute('aria-expanded','false'); }
     });
   });
 
-  /* Halifax local time */
+  /* theme toggle */
+  var root=document.documentElement, themeBtn=document.getElementById('themeBtn');
+  function currentTheme(){ return root.getAttribute('data-theme')==='dark' ? 'dark' : 'light'; }
+  themeBtn.setAttribute('aria-pressed', currentTheme()==='dark' ? 'true' : 'false');
+  themeBtn.addEventListener('click', function(){
+    var next = currentTheme()==='dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    themeBtn.setAttribute('aria-pressed', next==='dark' ? 'true' : 'false');
+    try{ localStorage.setItem('jr-theme', next); }catch(e){}
+  });
+
+  /* Halifax local time, shown in the footer */
   var clock=document.getElementById('clock');
   function tick(){
     try{
       var t=new Intl.DateTimeFormat('en-CA',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'America/Halifax'}).format(new Date());
-      clock.innerHTML='<b>'+t+'</b> AST · Halifax, NS';
-    }catch(e){ clock.textContent='Halifax, NS'; }
+      clock.textContent='Halifax, Nova Scotia · '+t+' AST';
+    }catch(e){ clock.textContent='Halifax, Nova Scotia'; }
   }
   tick(); setInterval(tick, 30000);
 
@@ -890,7 +961,7 @@
   if(reduce){ document.querySelectorAll('[data-reveal], [data-reveal-group]').forEach(function(el){ el.classList.add('in'); }); }
 
   /* active nav link */
-  var links=[].slice.call(document.querySelectorAll('.rail-nav a'));
+  var links=[].slice.call(document.querySelectorAll('#topnavLinks a'));
   var secs=links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
   var spy=new IntersectionObserver(function(en){ en.forEach(function(e){
     if(e.isIntersecting){ var id='#'+e.target.id;
@@ -983,6 +1054,69 @@
       btn.addEventListener('mouseleave', function(){ btn.style.transform='translate(0,0)'; });
     });
   }
+
+  /* ---------- SEARCH ---------- */
+  var SEARCH_INDEX = [
+    {sec:'Intro', title:'Jay Raval', snippet:'Transformation Analyst and Industrial Engineer in Halifax, NS.', section:'top'},
+    {sec:'Impact', title:'A year of delivery', snippet:'7 Power Apps, 18 Power Automate flows, 6 Power BI dashboards, 3 branches, 1 SharePoint environment.', section:'impact'},
+    {sec:'Impact', title:'Current focus', snippet:'AI assisted ERP build, an MBA in progress, and the PMP certification.', section:'impact'},
+    {sec:'Engagement model', title:'Diagnose, design, deploy, sustain', snippet:'The four phases behind every engagement.', section:'approach'},
+    {sec:'Experience', title:'Transformation Analyst', snippet:'Prime Material Handling, Halifax, NS, June 2025 to present.', section:'experience'},
+    {sec:'Experience', title:'Operations Manager & Client Advisor', snippet:'Aangi Advanced Composites, Ahmedabad, 2022 to 2023.', section:'experience'},
+    {sec:'Experience', title:'Process Improvement Engineer', snippet:'Aangi Advanced Composites, Ahmedabad, 2021 to 2022.', section:'experience'},
+    {sec:'Case studies', title:'Part Request System', snippet:'Power Apps, Power Automate and Visio across 3 branches.', section:'work'},
+    {sec:'Case studies', title:'Dispatch System', snippet:'Lovable, Supabase and GitHub for field service dispatch.', section:'work'},
+    {sec:'Case studies', title:'PSSR Sales Pipeline & Dashboard', snippet:'Power BI dashboard with daily auto refresh.', section:'work'},
+    {sec:'Case studies', title:'SOP Library & Process Documentation', snippet:'SOPs, Visio maps and change management.', section:'work'},
+    {sec:'Case studies', title:'ERP System: AI Assisted Build', snippet:'Lovable, Supabase and GitHub, AI assisted development.', section:'work'},
+    {sec:'Case studies', title:'Paper Boat Production Optimization', snippet:'DMAIC, 5S, PDCA, Poka Yoke and Value Stream Mapping.', section:'work'},
+    {sec:'Case studies', title:'Appointment Scheduling Optimization', snippet:'Nova Scotia Health, reducing appointment no shows.', section:'work'},
+    {sec:'Case studies', title:'Selective Maintenance Planning', snippet:'Weibull analysis, Python and Excel optimization.', section:'work'},
+    {sec:'Capabilities', title:'Skills and toolkit', snippet:'Lean Six Sigma, Power BI, Power Apps, SharePoint, SAP ERP and more.', section:'skills'},
+    {sec:'Capabilities', title:'Credentials', snippet:'Lean Six Sigma Green Belt, ISO 9001:2015 Lead Auditor, Power BI for Data Analysts, PMP in progress.', section:'skills'},
+    {sec:'Background', title:'Education', snippet:'Dalhousie University, NMIMS and Gujarat Technological University.', section:'background'},
+    {sec:'Background', title:'Community', snippet:'SailGP Canada, PMI Nova Scotia, Designing Productivity Conference.', section:'background'},
+    {sec:'Contact', title:'Get in touch', snippet:'jay.raval@dal.ca, phone and LinkedIn.', section:'contact'}
+  ];
+  var searchBtn=document.getElementById('searchBtn'), searchOverlay=document.getElementById('searchOverlay'),
+    searchInput=document.getElementById('searchInput'), searchResults=document.getElementById('searchResults');
+
+  function escapeHtml(s){ return s.replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+  function renderResults(q){
+    q=q.trim().toLowerCase();
+    var matches = !q ? SEARCH_INDEX : SEARCH_INDEX.filter(function(it){
+      return (it.title+' '+it.snippet).toLowerCase().indexOf(q) > -1;
+    });
+    if(!matches.length){ searchResults.innerHTML='<div class="search-empty">No results. Try a different term.</div>'; return; }
+    searchResults.innerHTML = matches.map(function(it){
+      return '<a class="search-result" href="#'+it.section+'">'+
+        '<div class="sr-sec">'+escapeHtml(it.sec)+'</div>'+
+        '<div class="sr-title">'+escapeHtml(it.title)+'</div>'+
+        '<div class="sr-snip">'+escapeHtml(it.snippet)+'</div></a>';
+    }).join('');
+  }
+  function openSearch(){
+    searchOverlay.classList.add('open');
+    searchInput.value='';
+    renderResults('');
+    document.body.style.overflow='hidden';
+    setTimeout(function(){ searchInput.focus(); }, 60);
+  }
+  function closeSearch(){
+    searchOverlay.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  searchBtn.addEventListener('click', openSearch);
+  searchOverlay.addEventListener('click', function(e){ if(e.target===searchOverlay) closeSearch(); });
+  searchInput.addEventListener('input', function(){ renderResults(searchInput.value); });
+  searchResults.addEventListener('click', function(e){ if(e.target.closest('.search-result')) closeSearch(); });
+  document.addEventListener('keydown', function(e){
+    var tag = document.activeElement && document.activeElement.tagName;
+    if(e.key==='/' && tag!=='INPUT' && tag!=='TEXTAREA' && !searchOverlay.classList.contains('open')){
+      e.preventDefault(); openSearch();
+    }
+    if(e.key==='Escape' && searchOverlay.classList.contains('open')){ closeSearch(); }
+  });
 })();
 </script>
 </body>
