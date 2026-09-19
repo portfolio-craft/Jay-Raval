@@ -66,6 +66,11 @@
   .rail-socials{display:flex;flex-direction:column;gap:6px;margin-top:14px;}
   .rail-socials a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;width:max-content;transition:color .15s,border-color .15s,transform .15s;}
   .rail-socials a:hover{color:var(--rust);border-color:var(--rust);transform:translateX(3px);}
+  .icon-row{display:flex;gap:9px;margin-bottom:16px;}
+  .icon-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+    border:1.5px solid var(--line);color:var(--ink-soft);transition:border-color .2s,color .2s,transform .2s,background .2s;}
+  .icon-btn svg{width:16px;height:16px;}
+  .icon-btn:hover{border-color:var(--rust);color:var(--rust);transform:translateY(-2px);background:#fff;}
 
   .rail-toggle{display:none;}
 
@@ -85,6 +90,12 @@
     background:radial-gradient(480px circle at var(--mx) var(--my), rgba(var(--rust-rgb),.08), transparent 65%);
     transition:background .15s ease-out;}
   .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:52px;}
+  .status-badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:22px;padding:7px 14px 7px 10px;
+    border:1px solid var(--line);border-radius:999px;background:#fff;
+    font-family:Consolas,"Courier New",monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
+  .status-dot{width:7px;height:7px;border-radius:50%;background:#3F7D4E;flex:none;}
+  .status-dot.pulse{animation:sdpulse 2.2s ease-out infinite;}
+  @keyframes sdpulse{0%{box-shadow:0 0 0 0 rgba(63,125,78,.45);}70%{box-shadow:0 0 0 8px rgba(63,125,78,0);}100%{box-shadow:0 0 0 0 rgba(63,125,78,0);}}
   .hero h1{font-size:clamp(2.1rem,4.6vw,3.2rem);letter-spacing:-.015em;max-width:16ch;}
   .hero h1 em{color:var(--rust);}
   .hero .lede{margin-top:26px;max-width:56ch;font-size:1.12rem;color:var(--ink-soft);}
@@ -98,6 +109,9 @@
   .tlink.quiet{color:var(--ink-soft);border-color:var(--rule);}
   .tlink.quiet:hover{color:var(--rust);border-color:var(--rust);}
   .magnet{display:inline-block;will-change:transform;transition:transform .12s ease-out;}
+  .fact-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+  .fact-pill{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:rgba(255,255,255,.5);}
 
   /* hero chart card */
   .hero-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px 26px 20px;
@@ -179,16 +193,23 @@
   }
 
   /* ---------- EXPERIENCE ---------- */
-  .xp{display:grid;grid-template-columns:200px 1fr;gap:8px 32px;padding:30px 0;border-bottom:1px solid var(--line);}
-  .xp:first-of-type{padding-top:0;}
-  .xp:last-child{border-bottom:none;}
-  .xp .when{font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);letter-spacing:.03em;padding-top:4px;}
+  .xp{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:32px 34px;margin-bottom:22px;transition:transform .25s,box-shadow .25s,border-color .25s;}
+  .xp:last-child{margin-bottom:0;}
+  .xp:hover{transform:translateY(-3px);box-shadow:0 26px 54px -34px rgba(29,26,21,.32);border-color:var(--rust);}
+  .xp-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
   .xp .role{font-weight:700;font-size:1.28rem;}
   .xp .org{margin-top:4px;font-size:14.5px;color:var(--rust);font-weight:500;}
-  .xp ul{margin:16px 0 0;padding:0;list-style:none;}
+  .xp-badge{width:52px;height:52px;border-radius:12px;background:var(--paper);border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--ink-soft);flex:none;}
+  .xp-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+  .xp-when{font-family:Consolas,"Courier New",monospace;font-size:11.5px;color:var(--faint);text-align:right;}
+  .xp-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .xp ul{margin:18px 0 0;padding:0;list-style:none;}
   .xp li{position:relative;padding-left:20px;margin-bottom:10px;color:var(--ink-soft);font-size:15.5px;}
   .xp li::before{content:"•";position:absolute;left:0;color:var(--faint);}
   .xp li b{color:var(--ink);font-weight:600;}
+  @media (max-width:560px){ .xp{padding:26px 22px;} .xp-right{align-items:flex-start;} .xp-when{text-align:left;} }
 
   /* ---------- CASE STUDIES ---------- */
   .work-item{position:relative;padding:36px 30px;margin:0 -30px;border-bottom:1px solid var(--line);
@@ -220,16 +241,16 @@
   }
 
   /* ---------- SKILLS ---------- */
-  .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+  .skill-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .skill-col{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px 26px;
+    transition:transform .25s,box-shadow .25s,border-color .25s;}
+  .skill-col:hover{transform:translateY(-3px);box-shadow:0 20px 44px -28px rgba(29,26,21,.3);border-color:var(--rust);}
   .skill-col h3{font-family:Consolas,"Courier New",monospace;font-size:12px;font-weight:500;letter-spacing:.1em;
     text-transform:uppercase;color:var(--rust);margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line);}
-  .skill-col ul{list-style:none;margin:0;padding:0;}
-  .skill-col li{position:relative;padding:6px 0 6px 16px;font-size:15px;color:var(--ink-soft);
-    transition:color .2s,padding-left .2s;}
-  .skill-col li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:1.5px;background:var(--rule);
-    transition:width .2s,background .2s;}
-  .skill-col li:hover{color:var(--ink);padding-left:20px;}
-  .skill-col li:hover::before{width:10px;background:var(--rust);}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .skill-tag{font-size:13px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px;transition:border-color .2s,color .2s,background .2s,transform .2s;}
+  .skill-tag:hover{border-color:var(--rust);color:var(--ink);background:#fff;transform:translateY(-1px);}
 
   /* toolkit scroller */
   .toolkit{margin-top:52px;}
@@ -246,19 +267,33 @@
   .tk-item:hover{color:var(--rust);}
 
   /* ---------- CREDENTIALS ---------- */
-  .cred-list{display:grid;gap:0;}
-  .cred{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:14px 4px;
-    border-bottom:1px solid var(--line);font-size:15px;transition:padding-left .2s,background .2s;}
-  .cred:last-child{border-bottom:none;}
-  .cred:hover{padding-left:10px;background:rgba(0,0,0,.012);}
-  .cred .name{color:var(--ink);display:flex;align-items:baseline;gap:10px;}
-  .cred .name::before{content:"✓";color:var(--rust);font-weight:700;font-size:13px;}
-  .cred .issuer{font-family:Consolas,"Courier New",monospace;font-size:12px;color:var(--faint);white-space:nowrap;padding-top:2px;}
+  .cred-list{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .cred{display:flex;gap:16px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;
+    transition:transform .25s,box-shadow .25s,border-color .25s;}
+  .cred:hover{transform:translateY(-3px);box-shadow:0 18px 40px -28px rgba(29,26,21,.3);border-color:var(--rust);}
+  .cred-badge{width:42px;height:42px;border-radius:10px;background:var(--paper);border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--ink-soft);flex:none;}
+  .cred .issuer{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+  .cred .name{color:var(--ink);font-weight:700;margin-top:3px;display:flex;align-items:flex-start;gap:8px;}
+  .cred .name::before{content:"✓";color:var(--rust);font-weight:700;font-size:13px;margin-top:3px;flex:none;}
+  .cred .desc{margin:6px 0 0;font-size:13.5px;color:var(--ink-soft);line-height:1.5;}
+  .cred.pending{border-style:dashed;}
   .cred.pending .name{color:var(--ink-soft);font-style:italic;}
-  .cred.pending .name::before{content:"";width:9px;height:9px;border-radius:50%;border:1.5px solid var(--faint);}
+  .cred.pending .name::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--faint);}
+  @media (max-width:640px){ .cred-list{grid-template-columns:1fr;} }
 
   /* ---------- BACKGROUND (edu + vol) ---------- */
   .bg-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;}
+  .edu-card{display:flex;gap:16px;padding:18px;margin-bottom:12px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;transition:transform .25s,box-shadow .25s,border-color .25s;}
+  .edu-card:last-child{margin-bottom:0;}
+  .edu-card:hover{transform:translateY(-2px);box-shadow:0 16px 34px -26px rgba(29,26,21,.3);border-color:var(--rust);}
+  .edu-card.current{border-color:var(--rust);background:linear-gradient(180deg,#fff,rgba(168,67,26,.04));}
+  .edu-badge{width:44px;height:44px;border-radius:10px;background:var(--paper);border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--ink-soft);flex:none;}
+  .edu-card .when{font-family:Consolas,"Courier New",monospace;font-size:11px;color:var(--rust);letter-spacing:.04em;}
+  .edu-card h4{font-weight:700;font-size:1rem;margin-top:5px;}
+  .edu-card p{margin:4px 0 0;font-size:13.5px;color:var(--ink-soft);}
   .bg-col h3{font-family:Consolas,"Courier New",monospace;font-size:12px;font-weight:500;letter-spacing:.1em;
     text-transform:uppercase;color:var(--faint);margin:0 0 20px;}
   .bg-row{padding:18px 4px;border-bottom:1px solid var(--line);transition:padding-left .2s,background .2s;}
@@ -342,7 +377,6 @@
   }
   @media (max-width:720px){
     .skill-cols{grid-template-columns:1fr;gap:34px;}
-    .xp{grid-template-columns:1fr;gap:6px;}
     .impact-item{flex:1 1 100%;padding-right:0;border-right:none;}
   }
   :focus-visible{outline:2px solid var(--rust);outline-offset:3px;}
@@ -374,10 +408,26 @@
     </div>
     <div class="rail-foot">
       <div class="clock" id="clock">Halifax, NS</div>
+      <div class="icon-row">
+        <a class="icon-btn" href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="10.5" x2="8" y2="16.5"/><circle cx="8" cy="7" r="0.6" fill="currentColor" stroke="none"/>
+            <path d="M12 16.5v-3.5c0-1.4 1-2.3 2.2-2.3s2.1.9 2.1 2.3v3.5"/><line x1="12" y1="10.5" x2="12" y2="16.5"/>
+          </svg>
+        </a>
+        <a class="icon-btn" href="https://github.com/JaysShadow" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.87 10.93.58.1.79-.25.79-.56 0-.27-.01-1.17-.02-2.13-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.95.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .31.21.67.8.56A10.98 10.98 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/>
+          </svg>
+        </a>
+        <a class="icon-btn" href="mailto:jay.raval@dal.ca" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,7 12,13 21,7"/>
+          </svg>
+        </a>
+      </div>
       <div class="rail-socials">
         <a href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF) ↗</a>
-        <a href="https://www.linkedin.com/in/jayr28/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="https://github.com/JaysShadow" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="mailto:jay.raval@dal.ca">jay.raval@dal.ca</a>
       </div>
     </div>
@@ -391,12 +441,18 @@
       <div class="hero-grid">
         <div class="measure">
           <div class="kicker"><span class="n">00</span><span class="t">Halifax, Nova Scotia · Operations Consulting</span></div>
+          <div class="status-badge"><span class="status-dot pulse"></span>Open to transformation and consulting roles</div>
           <h1>I turn manual operations into systems leadership can <em>actually trust</em>.</h1>
           <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who advises operations leaders on where a process is quietly failing, then builds the platform that fixes it for good. Process design, change management and hands on delivery on the Microsoft stack, from one person.</p>
           <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, running platform strategy end to end across three Atlantic Canada branches.</p>
           <div class="hero-links">
             <a class="tlink magnet" href="#contact" data-magnet>Get in touch</a>
             <a class="tlink quiet magnet" href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener" data-magnet>Download résumé ↗</a>
+          </div>
+          <div class="fact-pills">
+            <span class="fact-pill">Lean Six Sigma Green Belt</span>
+            <span class="fact-pill">Based in Halifax, NS</span>
+            <span class="fact-pill">MBA in progress</span>
           </div>
         </div>
 
@@ -503,41 +559,68 @@
       </div>
 
       <div class="xp" data-reveal>
-        <div class="when">JUN 2025<br>TO PRESENT</div>
-        <div>
-          <div class="role">Transformation Analyst</div>
-          <div class="org">Prime Material Handling · Halifax, NS</div>
-          <ul>
-            <li>Own the branch operations platform end to end: <b>7 Power Apps, 18 flows, 6 dashboards</b> on a SharePoint backbone serving 3 branches.</li>
-            <li>Sole developer, admin and first responder, covering access governance, licensing, and technician onboarding from day one.</li>
-            <li>Drive adoption through SOP packs, Visio process maps and change management across every tool.</li>
-          </ul>
+        <div class="xp-head">
+          <div>
+            <div class="role">Transformation Analyst</div>
+            <div class="org">Prime Material Handling · Halifax, NS</div>
+          </div>
+          <div class="xp-right">
+            <div class="xp-badge">PMH</div>
+            <div class="xp-when">JUN 2025<br>TO PRESENT</div>
+          </div>
         </div>
+        <div class="xp-tags">
+          <span class="skill-tag">Power Apps</span><span class="skill-tag">Power Automate</span>
+          <span class="skill-tag">SharePoint</span><span class="skill-tag">Visio</span><span class="skill-tag">Change management</span>
+        </div>
+        <ul>
+          <li>Own the branch operations platform end to end: <b>7 Power Apps, 18 flows, 6 dashboards</b> on a SharePoint backbone serving 3 branches.</li>
+          <li>Sole developer, admin and first responder, covering access governance, licensing, and technician onboarding from day one.</li>
+          <li>Drive adoption through SOP packs, Visio process maps and change management across every tool.</li>
+        </ul>
       </div>
 
       <div class="xp" data-reveal>
-        <div class="when">2022<br>TO 2023</div>
-        <div>
-          <div class="role">Operations Manager &amp; Client Advisor (S&amp;OP)</div>
-          <div class="org">Aangi Advanced Composites · Ahmedabad</div>
-          <ul>
-            <li>Built Power BI and Excel KPI tooling that lifted raw material utilization <b>+18%</b> and automation rate <b>+12%</b>.</li>
-            <li>Ran freight and TCO analysis inside SAP supported workflows to improve delivery reliability and cut logistics spend.</li>
-            <li>Aligned procurement with demand using MRP and replenishment logic, avoiding both stockouts and excess holding.</li>
-          </ul>
+        <div class="xp-head">
+          <div>
+            <div class="role">Operations Manager &amp; Client Advisor (S&amp;OP)</div>
+            <div class="org">Aangi Advanced Composites · Ahmedabad</div>
+          </div>
+          <div class="xp-right">
+            <div class="xp-badge">AAC</div>
+            <div class="xp-when">2022<br>TO 2023</div>
+          </div>
         </div>
+        <div class="xp-tags">
+          <span class="skill-tag">Power BI</span><span class="skill-tag">Excel</span>
+          <span class="skill-tag">SAP</span><span class="skill-tag">MRP</span><span class="skill-tag">S&amp;OP</span>
+        </div>
+        <ul>
+          <li>Built Power BI and Excel KPI tooling that lifted raw material utilization <b>+18%</b> and automation rate <b>+12%</b>.</li>
+          <li>Ran freight and TCO analysis inside SAP supported workflows to improve delivery reliability and cut logistics spend.</li>
+          <li>Aligned procurement with demand using MRP and replenishment logic, avoiding both stockouts and excess holding.</li>
+        </ul>
       </div>
 
       <div class="xp" data-reveal>
-        <div class="when">2021<br>TO 2022</div>
-        <div>
-          <div class="role">Process Improvement Engineer</div>
-          <div class="org">Aangi Advanced Composites · Ahmedabad</div>
-          <ul>
-            <li>Led root cause and gap analysis to clear recurring supply chain bottlenecks.</li>
-            <li>Applied ABC/XYZ classification and lead time analysis to right size inventory and safety stock.</li>
-          </ul>
+        <div class="xp-head">
+          <div>
+            <div class="role">Process Improvement Engineer</div>
+            <div class="org">Aangi Advanced Composites · Ahmedabad</div>
+          </div>
+          <div class="xp-right">
+            <div class="xp-badge">AAC</div>
+            <div class="xp-when">2021<br>TO 2022</div>
+          </div>
         </div>
+        <div class="xp-tags">
+          <span class="skill-tag">Root cause analysis</span><span class="skill-tag">ABC/XYZ classification</span>
+          <span class="skill-tag">Lead time analysis</span>
+        </div>
+        <ul>
+          <li>Led root cause and gap analysis to clear recurring supply chain bottlenecks.</li>
+          <li>Applied ABC/XYZ classification and lead time analysis to right size inventory and safety stock.</li>
+        </ul>
       </div>
     </section>
 
@@ -624,15 +707,30 @@
       <div class="skill-cols" data-reveal-group>
         <div class="skill-col">
           <h3>Transformation &amp; improvement</h3>
-          <ul><li>Lean Six Sigma (Green Belt)</li><li>DMAIC &amp; root cause analysis</li><li>Value stream mapping</li><li>Process mapping (Visio)</li><li>Change management</li><li>S&amp;OP · continuous improvement</li></ul>
+          <div class="skill-tags">
+            <span class="skill-tag">Lean Six Sigma (Green Belt)</span><span class="skill-tag">DMAIC</span>
+            <span class="skill-tag">Root cause analysis</span><span class="skill-tag">Value stream mapping</span>
+            <span class="skill-tag">Process mapping (Visio)</span><span class="skill-tag">Change management</span>
+            <span class="skill-tag">S&amp;OP</span><span class="skill-tag">Continuous improvement</span>
+          </div>
         </div>
         <div class="skill-col">
           <h3>Data &amp; BI</h3>
-          <ul><li>Power BI · Tableau · Cognos</li><li>SQL · Python · R</li><li>Excel (Power Query, VBA, Solver)</li><li>KPI reporting &amp; dashboards</li><li>Predictive analytics</li><li>Demand forecasting</li></ul>
+          <div class="skill-tags">
+            <span class="skill-tag">Power BI</span><span class="skill-tag">Tableau</span><span class="skill-tag">Cognos</span>
+            <span class="skill-tag">SQL</span><span class="skill-tag">Python</span><span class="skill-tag">R</span>
+            <span class="skill-tag">Excel (Power Query, VBA, Solver)</span><span class="skill-tag">KPI reporting</span>
+            <span class="skill-tag">Predictive analytics</span><span class="skill-tag">Demand forecasting</span>
+          </div>
         </div>
         <div class="skill-col">
           <h3>Platforms &amp; build</h3>
-          <ul><li>Power Apps · Power Automate</li><li>SharePoint (site owner)</li><li>Lovable · Supabase · GitHub</li><li>SAP ERP (MM/TM/ECC) · NetSuite</li><li>MS Project · Primavera P6</li><li>Agile methodology</li></ul>
+          <div class="skill-tags">
+            <span class="skill-tag">Power Apps</span><span class="skill-tag">Power Automate</span>
+            <span class="skill-tag">SharePoint</span><span class="skill-tag">Lovable</span><span class="skill-tag">Supabase</span>
+            <span class="skill-tag">GitHub</span><span class="skill-tag">SAP ERP (MM/TM/ECC)</span><span class="skill-tag">NetSuite</span>
+            <span class="skill-tag">MS Project</span><span class="skill-tag">Primavera P6</span><span class="skill-tag">Agile</span>
+          </div>
         </div>
       </div>
 
@@ -660,13 +758,41 @@
 
       <div class="kicker" style="margin-top:56px;"><span class="n">05b</span><span class="t">Credentials</span></div>
       <div class="cred-list" data-reveal-group>
-        <div class="cred"><span class="name">Lean Six Sigma Green Belt</span><span class="issuer"></span></div>
-        <div class="cred"><span class="name">ISO 9001:2015 Lead Auditor</span><span class="issuer"></span></div>
-        <div class="cred"><span class="name">Power BI for Data Analysts</span><span class="issuer">Microsoft</span></div>
-        <div class="cred"><span class="name">Quality Management Foundations</span><span class="issuer"></span></div>
-        <div class="cred"><span class="name">MySQL Essential Training</span><span class="issuer"></span></div>
-        <div class="cred"><span class="name">AutoCAD &amp; Fusion 360</span><span class="issuer">Autodesk</span></div>
-        <div class="cred pending"><span class="name">PMP</span><span class="issuer">in progress</span></div>
+        <div class="cred">
+          <div class="cred-badge">LSS</div>
+          <div><div class="issuer">Council for Six Sigma Certification</div><div class="name">Lean Six Sigma Green Belt</div>
+            <p class="desc">DMAIC based process improvement: root cause analysis, statistical thinking and waste reduction.</p></div>
+        </div>
+        <div class="cred">
+          <div class="cred-badge">ISO</div>
+          <div><div class="issuer">ISO 9001:2015</div><div class="name">Lead Auditor</div>
+            <p class="desc">Qualified to lead audits of quality management systems against the ISO 9001:2015 standard.</p></div>
+        </div>
+        <div class="cred">
+          <div class="cred-badge">PBI</div>
+          <div><div class="issuer">Microsoft</div><div class="name">Power BI for Data Analysts</div>
+            <p class="desc">Building data models, reports and dashboards in Power BI.</p></div>
+        </div>
+        <div class="cred">
+          <div class="cred-badge">QM</div>
+          <div><div class="issuer">Quality Management</div><div class="name">Quality Management Foundations</div>
+            <p class="desc">Core principles of quality management systems and continuous improvement.</p></div>
+        </div>
+        <div class="cred">
+          <div class="cred-badge">SQL</div>
+          <div><div class="issuer">Database</div><div class="name">MySQL Essential Training</div>
+            <p class="desc">Relational database fundamentals and writing SQL queries in MySQL.</p></div>
+        </div>
+        <div class="cred">
+          <div class="cred-badge">CAD</div>
+          <div><div class="issuer">Autodesk</div><div class="name">AutoCAD &amp; Fusion 360</div>
+            <p class="desc">2D drafting and 3D parametric modeling across AutoCAD and Fusion 360.</p></div>
+        </div>
+        <div class="cred pending">
+          <div class="cred-badge">PMP</div>
+          <div><div class="issuer">Project Management Institute · in progress</div><div class="name">PMP</div>
+            <p class="desc">PMI's globally recognized certification in project leadership and delivery.</p></div>
+        </div>
       </div>
     </section>
 
@@ -676,9 +802,18 @@
       <div class="bg-grid">
         <div class="bg-col" data-reveal-group>
           <h3>Education</h3>
-          <div class="bg-row"><div class="when">2023 TO 2025</div><h4>Master of Engineering, Industrial Engineering</h4><p>Dalhousie University · Halifax, NS</p></div>
-          <div class="bg-row"><div class="when">2025 TO 2027 · in progress</div><h4>MBA, Business Management</h4><p>NMIMS (Narsee Monjee Institute of Management Studies)</p></div>
-          <div class="bg-row"><div class="when">2017 TO 2021</div><h4>Bachelor of Engineering, Mechanical Engineering</h4><p>Gujarat Technological University · ranked 151 of 31,163</p></div>
+          <div class="edu-card">
+            <div class="edu-badge">DAL</div>
+            <div><div class="when">2023 TO 2025</div><h4>Master of Engineering, Industrial Engineering</h4><p>Dalhousie University · Halifax, NS</p></div>
+          </div>
+          <div class="edu-card current">
+            <div class="edu-badge">NM</div>
+            <div><div class="when">2025 TO 2027 · IN PROGRESS</div><h4>MBA, Business Management</h4><p>NMIMS (Narsee Monjee Institute of Management Studies)</p></div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-badge">GTU</div>
+            <div><div class="when">2017 TO 2021</div><h4>Bachelor of Engineering, Mechanical Engineering</h4><p>Gujarat Technological University · ranked 151 of 31,163</p></div>
+          </div>
         </div>
         <div class="bg-col" data-reveal-group>
           <h3>Community</h3>
