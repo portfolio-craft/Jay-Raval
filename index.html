@@ -105,12 +105,12 @@
   .kicker::after{content:"";flex:1;height:1px;background:var(--rule);}
 
   /* ---------- HERO ---------- */
-  .hero{padding-top:clamp(20px,3vw,36px);position:relative;overflow:hidden;}
+  .hero{padding-top:clamp(8px,1vw,16px);position:relative;overflow:hidden;}
   .hero-glow{position:absolute;inset:0;pointer-events:none;z-index:0;
     background:radial-gradient(480px circle at var(--mx) var(--my), rgba(var(--rust-rgb),.08), transparent 65%);
     transition:background .15s ease-out;}
   .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:52px;}
-  .status-badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:14px;padding:7px 14px 7px 10px;
+  .status-badge{display:inline-flex;align-items:center;gap:9px;margin-bottom:10px;padding:7px 14px 7px 10px;
     border:1px solid var(--line);border-radius:999px;background:var(--card);
     font-family:Consolas,"Courier New",monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
   .status-dot{width:7px;height:7px;border-radius:50%;background:#3F7D4E;flex:none;}
@@ -118,15 +118,15 @@
   @keyframes sdpulse{0%{box-shadow:0 0 0 0 rgba(63,125,78,.45);}70%{box-shadow:0 0 0 8px rgba(63,125,78,0);}100%{box-shadow:0 0 0 0 rgba(63,125,78,0);}}
   .hero h1{font-size:clamp(2rem,3.6vw,2.85rem);letter-spacing:-.015em;max-width:19ch;}
   .hero h1 em{color:var(--rust);}
-  .hero .lede{margin-top:18px;max-width:56ch;font-size:1.08rem;color:var(--ink-soft);}
-  .hero .now{margin-top:18px;font-family:Consolas,"Courier New",monospace;font-size:13px;color:var(--faint);
+  .hero .lede{margin-top:12px;max-width:60ch;font-size:1.06rem;line-height:1.5;color:var(--ink-soft);}
+  .hero .now{margin-top:14px;font-family:Consolas,"Courier New",monospace;font-size:13px;color:var(--faint);
     display:flex;flex-wrap:wrap;gap:6px 10px;}
   .hero .now b{color:var(--ink);font-weight:500;}
-  .fact-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+  .fact-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
   .fact-pill{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;
     color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:var(--card);}
 
-  .btn-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;}
+  .btn-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;}
   .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;font-size:14px;font-weight:600;
     text-decoration:none;will-change:transform;transition:transform .18s,box-shadow .18s,background .18s,color .18s,border-color .18s;}
   .btn.solid{background:var(--ink);color:var(--paper);box-shadow:0 14px 30px -16px rgba(0,0,0,.5);}
@@ -134,7 +134,7 @@
   .btn.outline{border:1.5px solid var(--line);color:var(--ink);background:var(--card);}
   .btn.outline:hover{border-color:var(--rust);color:var(--rust);}
 
-  .follow-row{display:flex;align-items:center;gap:14px;margin-top:20px;}
+  .follow-row{display:flex;align-items:center;gap:14px;margin-top:14px;}
   .follow-label{font-family:Consolas,"Courier New",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
   .icon-row{display:flex;gap:9px;}
   .icon-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
@@ -495,12 +495,12 @@
         <div class="kicker"><span class="n">00</span><span class="t">Halifax, Nova Scotia · Operations Consulting</span></div>
         <div class="status-badge"><span class="status-dot pulse"></span>Currently solving business challenges</div>
         <h1>I turn manual operations into systems leadership can <em>actually trust</em>.</h1>
-        <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who advises operations leaders on where a process is quietly failing, then builds the platform that fixes it for good. Process design, change management and hands on delivery on the Microsoft stack, from one person.</p>
-        <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, running platform strategy end to end across three Atlantic Canada branches.</p>
+        <p class="lede">I'm an industrial engineer and Lean Six Sigma Green Belt who finds where a process is quietly failing, then builds what fixes it. Process design, change management and hands on delivery, from one person.</p>
         <div class="btn-row">
           <a class="btn solid magnet" href="#contact" data-magnet>Get in touch</a>
-          <a class="btn outline magnet" href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener" data-magnet>Download résumé ↗</a>
+          <a class="btn outline magnet" href="Jay_Raval_Resume.pdf" target="_blank" rel="noopener" data-magnet>Download resume ↗</a>
         </div>
+        <p class="now">Currently the sole <b>Transformation Analyst</b> at Prime Material Handling, running platform strategy end to end across three Atlantic Canada branches.</p>
         <div class="fact-pills">
           <span class="fact-pill">Lean Six Sigma Green Belt</span>
           <span class="fact-pill">Based in Halifax, NS</span>
