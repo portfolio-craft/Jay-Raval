@@ -29,7 +29,7 @@
     --line:#DED6C3; --rule:#CFC5AC; --card:#FFFFFF; --hover-tint:rgba(0,0,0,.012);
     --rust:#A8431A; --rust-deep:#7C3013; --rust-rgb:168,67,26;
     --ink-invert:#F6F3EA;
-    --content-max:660px; --wide:1180px;
+    --content-max:660px; --wide:clamp(1180px, 92vw, 1520px);
     --mx:50%; --my:50%;
   }
   :root[data-theme="dark"]{
@@ -65,7 +65,7 @@
   /* ---------- TOP NAV ---------- */
   .topnav{position:sticky;top:0;z-index:90;background:rgba(var(--paper-rgb),.92);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);}
-  .topnav-in{max-width:1180px;margin:0 auto;padding:15px clamp(20px,4vw,48px);
+  .topnav-in{max-width:var(--wide);margin:0 auto;padding:15px clamp(20px,4vw,48px);
     display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;}
   .topnav .mark{font-weight:700;font-size:1.1rem;letter-spacing:-.01em;text-decoration:none;flex:none;}
   .topnav-links{display:flex;gap:2px;flex-wrap:wrap;}
