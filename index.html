@@ -174,12 +174,16 @@
   .hero-card{opacity:0;animation:heroIn .8s cubic-bezier(.2,.7,.2,1) .3s forwards;}
 
   /* ---------- IMPACT ---------- */
-  .impact-row{display:flex;flex-wrap:wrap;gap:0;margin-top:6px;}
-  .impact-item{flex:1 1 150px;padding:22px 26px 22px 0;border-right:1px solid var(--line);
-    transition:transform .3s cubic-bezier(.2,.7,.2,1);}
-  .impact-item:last-child{border-right:none;}
-  .impact-item .v{font-weight:700;font-size:clamp(2.1rem,4vw,2.7rem);color:var(--ink);}
-  .impact-item .l{margin-top:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.45;max-width:20ch;}
+  .stat-subhead{display:flex;align-items:baseline;gap:12px;margin-top:40px;font-family:Consolas,"Courier New",monospace;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .stat-subhead:first-of-type{margin-top:26px;}
+  .stat-subhead::after{content:"";flex:1;height:1px;background:var(--rule);}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px;}
+  .stat-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 20px 20px;
+    transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s;}
+  .stat-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -30px rgba(0,0,0,.4);border-color:var(--rust);}
+  .stat-card .v{font-weight:700;font-size:clamp(2rem,3.6vw,2.5rem);color:var(--rust);}
+  .stat-card .l{margin-top:8px;font-size:13px;color:var(--ink-soft);line-height:1.45;}
   .impact-note{margin-top:30px;font-size:14.5px;color:var(--faint);max-width:60ch;}
   .focus-card{margin-top:32px;padding:22px 24px;background:var(--card);border:1px solid var(--line);
     border-radius:12px;max-width:480px;}
@@ -433,13 +437,8 @@
   }
 
   /* ---------- RESPONSIVE ---------- */
-  @media (max-width:960px){
-    .impact-row{flex-wrap:wrap;}
-    .impact-item{flex:1 1 44%;border-bottom:1px solid var(--line);}
-  }
   @media (max-width:720px){
     .skill-cols{grid-template-columns:1fr;gap:34px;}
-    .impact-item{flex:1 1 100%;padding-right:0;border-right:none;}
   }
   :focus-visible{outline:2px solid var(--rust);outline-offset:3px;}
 </style>
@@ -556,17 +555,28 @@
 
   <!-- IMPACT -->
   <section class="block" id="impact">
-    <div class="kicker"><span class="n">01</span><span class="t">A year of delivery</span></div>
+    <div class="kicker"><span class="n">01</span><span class="t">Delivery record</span></div>
     <div class="measure">
-      <h2 style="font-size:1.5rem;font-weight:700;">What one analyst shipped, solo, in fourteen months</h2>
+      <h2 style="font-size:1.5rem;font-weight:700;">What one analyst delivers, solo, across every engagement</h2>
     </div>
-    <div class="impact-row" data-reveal-group>
-      <div class="impact-item"><div class="v num" data-count="7">0</div><div class="l">Power Apps designed and built for shop floor use</div></div>
-      <div class="impact-item"><div class="v num" data-count="18">0</div><div class="l">Power Automate flows running in production</div></div>
-      <div class="impact-item"><div class="v num" data-count="6">0</div><div class="l">Power BI dashboards leadership checks daily</div></div>
-      <div class="impact-item"><div class="v num" data-count="3">0</div><div class="l">Branches on one shared operations platform</div></div>
-      <div class="impact-item"><div class="v num" data-count="1">0</div><div class="l">SharePoint environment, owned end to end</div></div>
+
+    <div class="stat-subhead">Career snapshot</div>
+    <div class="stat-grid" data-reveal-group>
+      <div class="stat-card"><div class="v num" data-count="3">0</div><div class="l">Roles held, from process engineering to transformation leadership</div></div>
+      <div class="stat-card"><div class="v num" data-count="2">0</div><div class="l">Companies where the operating model was rebuilt end to end</div></div>
+      <div class="stat-card"><div class="v num" data-count="8">0</div><div class="l">Case studies delivered, shop floor to healthcare scheduling</div></div>
+      <div class="stat-card"><div class="v num" data-count="7">0</div><div class="l">Professional credentials earned along the way</div></div>
     </div>
+
+    <div class="stat-subhead">Platform owned at Prime Material Handling</div>
+    <div class="stat-grid" data-reveal-group>
+      <div class="stat-card"><div class="v num" data-count="7">0</div><div class="l">Power Apps designed and built for shop floor use</div></div>
+      <div class="stat-card"><div class="v num" data-count="18">0</div><div class="l">Power Automate flows running in production</div></div>
+      <div class="stat-card"><div class="v num" data-count="6">0</div><div class="l">Power BI dashboards leadership checks daily</div></div>
+      <div class="stat-card"><div class="v num" data-count="3">0</div><div class="l">Branches on one shared operations platform</div></div>
+      <div class="stat-card"><div class="v num" data-count="1">0</div><div class="l">SharePoint environment, owned end to end</div></div>
+    </div>
+
     <p class="impact-note">Plus the layer that makes any of it stick: SOPs, Visio process maps, project plans, and being the first call when something breaks.</p>
     <div class="focus-card" data-reveal>
       <div class="focus-label">Current focus</div>
@@ -1077,7 +1087,8 @@
   /* ---------- SEARCH ---------- */
   var SEARCH_INDEX = [
     {sec:'Intro', title:'Jay Raval', snippet:'Transformation Analyst and Industrial Engineer in Halifax, NS.', section:'top'},
-    {sec:'Impact', title:'A year of delivery', snippet:'7 Power Apps, 18 Power Automate flows, 6 Power BI dashboards, 3 branches, 1 SharePoint environment.', section:'impact'},
+    {sec:'Impact', title:'Career snapshot', snippet:'3 roles, 2 companies, 8 case studies delivered, 7 professional credentials earned.', section:'impact'},
+    {sec:'Impact', title:'Platform owned at Prime Material Handling', snippet:'7 Power Apps, 18 Power Automate flows, 6 Power BI dashboards, 3 branches, 1 SharePoint environment.', section:'impact'},
     {sec:'Impact', title:'Current focus', snippet:'AI assisted ERP build, an MBA in progress, and the PMP certification.', section:'impact'},
     {sec:'Engagement model', title:'Diagnose, design, deploy, sustain', snippet:'The four phases behind every engagement.', section:'approach'},
     {sec:'Experience', title:'Transformation Analyst', snippet:'Prime Material Handling, Halifax, NS, June 2025 to present.', section:'experience'},
